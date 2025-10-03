@@ -1,0 +1,33 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Ricardo",
+      "apellidos": "Uribe",
+      "username": "Ricardo21",
+      "password": "Rurive21",
+      "role": "Estudiante",
+      "isactive": true
+    },
+    {
+      "id": 2,
+      "nombre": "Viviana",
+      "apellidos": "Alvarez",
+      "username": "Viviana12",
+      "password": "Vivianaprofe",
+      "confirmPassword": "Vivianaprofe",
+      "role": "Profesora",
+      "isactive": true
+    },
+    {
+      "nombre": "juan",
+      "apellidos": "mendez",
+      "username": "yisus homosexual",
+      "password": "yisus1234",
+      "confirmPassword": "yisus1234",
+      "role": "Profesor",
+      "isactive": true,
+      "id": 3
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "DriveQuizAPP",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
