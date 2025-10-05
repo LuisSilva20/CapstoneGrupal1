@@ -15,8 +15,8 @@
       <ion-title size="large"></ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-card class="imghold">
-  <img src="assets/duoc.jfif" alt="duoc logo">
+  <ion-card class="imgholder">
+  <img src="../../../assets/icon/logo.jpg" alt="duoc logo">
   </ion-card>
   <ion-card>
     <ion-card-header class="contenido">
@@ -28,7 +28,7 @@
       <ion-list class="contenido">
         <ion-item>
           <ion-label position="floating">Username</ion-label>
-          <ion-input type="text" formControlName="username" placeholder="Pedro Valenzuela" name="username"
+          <ion-input type="text" formControlName="username" placeholder="" name="username"
             [(ngModel)]="usuario.username"></ion-input>
         </ion-item>
         <div *ngIf="inicioSesionForm.get('username')?.invalid && (inicioSesionForm.get('username')?.dirty ||

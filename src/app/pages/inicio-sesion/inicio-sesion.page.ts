@@ -84,7 +84,7 @@ export class InicioSesionPage {
       sessionStorage.setItem('userrole', this.usuario.role);
       sessionStorage.setItem('ingresado', 'true');
       this.showToast('Sesión Iniciada');
-      this.router.navigateByUrl('/home');
+      this.router.navigateByUrl('/inicio');
     });
   }
 

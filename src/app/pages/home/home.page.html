@@ -1,17 +1,31 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>TROLEADO WAJA</ion-title>
+    <ion-title>DriveQuizAPP</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">LUCHO WEKO</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding">
-    <ion-text>BROMITA JEJE</ion-text>
-    <ion-button href="https://www.youtube.com/watch?v=35XFAkwmU4c" expand="block">Ok no ahora si este boton lleva a la pagina</ion-button>
-  </ion-content>
+  <ion-content [fullscreen]="true">
+    <ion-header class="contenido" collapse="condense">
+      <ion-toolbar>
+        <ion-title size="large">home</ion-title>
+      </ion-toolbar>
+    </ion-header>
+      
+    
+    
+    <ion-card class="imgholder"> 
+      <img src="../../../assets/icon/logo.jpg">
+      </ion-card>  
+    <ion-card >
+      <p style="color:aliceblue"></p>  
+      <ion-button routerLink="/inicio-sesion" expand="block" fill="solid" color="primary" shape="round">
+        Inicio-sesion
+      </ion-button>
+      <p style="color:aliceblue"></p> 
+      <ion-button routerLink="/registrarse" expand="block" fill="solid" color="warning" shape="round">
+        Registrarse
+      </ion-button>
+      <p style="color:aliceblue"></p> 
+    </ion-card>
+
 </ion-content>

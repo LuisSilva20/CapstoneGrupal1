@@ -1,0 +1,14 @@
+.imgholder {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;     /* Centra verticalmente */
+  padding: 16px;
+}
+
+.imgholder img {
+  width: 120px;            /* Ajusta el tamaño del círculo */
+  height: 120px;
+  border-radius: 50%;      /* Hace la imagen circular */
+  object-fit: cover;       /* Ajusta el contenido dentro del círculo */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Opcional: sombra suave */
+}
