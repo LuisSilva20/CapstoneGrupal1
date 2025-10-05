@@ -1,17 +1,39 @@
-import { Component } from '@angular/core';
-import { IonicModule, ToastController, AlertController } from '@ionic/angular';
-import { RouterModule, Router } from '@angular/router';
-import { ReactiveFormsModule, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Api } from 'src/app/servicios/api';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton, IonBackButton } from '@ionic/angular/standalone';
+import { AlertController, ToastController } from '@ionic/angular';
+import { Api } from 'src/app/servicios/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio-sesion',
   templateUrl: './inicio-sesion.page.html',
   styleUrls: ['./inicio-sesion.page.scss'],
   standalone: true,
-  imports: [IonicModule, ReactiveFormsModule, RouterModule, CommonModule]
+  imports: [
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IonButtons,
+    IonBackButton,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardContent,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonRow,
+    IonCol,
+    IonButton
+],
 })
+
 export class InicioSesionPage {
   userdata: any;
   usuario = { id: 0, username: '', password: '', role: '', isactive: true };
@@ -25,8 +47,16 @@ export class InicioSesionPage {
     private toastController: ToastController
   ) {
     this.inicioSesionForm = this.builder.group({
-      username: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)])
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16),
+      ]),
     });
   }
 
@@ -34,7 +64,7 @@ export class InicioSesionPage {
     if (!this.inicioSesionForm.valid) return;
 
     const username = this.inicioSesionForm.value.username;
-    this.api.GetUserById(username).subscribe(resp => {
+    this.api.GetUserById(username).subscribe((resp) => {
       this.userdata = resp;
       if (!this.userdata.length) return this.NoExiste();
 
@@ -59,22 +89,37 @@ export class InicioSesionPage {
   }
 
   async showToast(msg: string) {
-    const toast = await this.toastController.create({ message: msg, duration: 3000 });
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 3000,
+    });
     toast.present();
   }
 
   async UserInactivo() {
-    const alerta = await this.alertController.create({ header: 'Error', message: 'Usuario inactivo, contactar a admin@admin.cl', buttons: ['Ok'] });
+    const alerta = await this.alertController.create({
+      header: 'Error',
+      message: 'Usuario inactivo, contactar a admin@admin.cl',
+      buttons: ['Ok'],
+    });
     alerta.present();
   }
 
   async DatoError() {
-    const alerta = await this.alertController.create({ header: 'Error', message: 'Revise sus credenciales', buttons: ['Ok'] });
+    const alerta = await this.alertController.create({
+      header: 'Error',
+      message: 'Revise sus credenciales',
+      buttons: ['Ok'],
+    });
     alerta.present();
   }
 
   async NoExiste() {
-    const alerta = await this.alertController.create({ header: 'Debe registrarse', message: 'Usuario no existe', buttons: ['Ok'] });
+    const alerta = await this.alertController.create({
+      header: 'Debe registrarse',
+      message: 'Usuario no existe',
+      buttons: ['Ok'],
+    });
     alerta.present();
   }
 }
