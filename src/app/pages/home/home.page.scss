@@ -1,14 +1,63 @@
+/* home.page.scss */
+
+/* Quita el fondo por defecto de ion-content */
+ion-content {
+  --background: none;
+}
+
+/* Contenedor principal centrado */
+.center-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  gap: 20px;
+  padding: 16px;
+
+  /* Fondo con gradiente cálido */
+  background: linear-gradient(135deg, #ff512f, #dd2476); 
+}
+
+/* Estilo del logo */
 .imgholder {
   display: flex;
-  justify-content: center; /* Centra horizontalmente */
-  align-items: center;     /* Centra verticalmente */
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1); /* ligero fondo translúcido */
   padding: 16px;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* sombra alrededor del logo */
 }
 
 .imgholder img {
-  width: 120px;            /* Ajusta el tamaño del círculo */
+  width: 120px;
   height: 120px;
-  border-radius: 50%;      /* Hace la imagen circular */
-  object-fit: cover;       /* Ajusta el contenido dentro del círculo */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Opcional: sombra suave */
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Contenedor de los botones */
+.button-card {
+  width: 100%;
+  max-width: 300px; /* ancho máximo en móviles */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.1); /* fondo translúcido */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* sombra suave para destacar */
+}
+
+/* Botones */
+ion-button {
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+ion-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }

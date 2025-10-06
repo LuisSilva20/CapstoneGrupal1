@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { IniciadoGuard } from './data/guards/iniciado.guard';
 
 export const routes: Routes = [
   {
@@ -17,9 +18,11 @@ export const routes: Routes = [
   {
     path: 'registrarse',
     loadComponent: () => import('./pages/registrarse/registrarse.page').then( m => m.RegistrarsePage)
-  },  {
+  },
+  {
     path: 'inicio',
-    loadComponent: () => import('./pages/inicio/inicio.page').then( m => m.InicioPage)
+    loadComponent: () => import('./pages/inicio/inicio.page').then( m => m.InicioPage),
+    canActivate: [IniciadoGuard]
   },
 
 ];

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton, IonBackButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton, IonBackButton, IonNote, IonIcon } from '@ionic/angular/standalone';
 import { AlertController, ToastController } from '@ionic/angular';
 import { Api } from 'src/app/servicios/api';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './inicio-sesion.page.html',
   styleUrls: ['./inicio-sesion.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonIcon, IonNote, 
     IonContent,
     IonHeader,
     IonTitle,
