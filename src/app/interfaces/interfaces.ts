@@ -15,3 +15,19 @@ export interface User {
   role: string;
   isactive: boolean;
 }
+
+export interface Curso {
+  id: number;
+  titulo: string;
+  descripcion: string;
+  duracion: string;
+  lessons?: Leccion[];
+}
+
+export interface Leccion {
+  id: number;
+  titulo: string;
+  contenido: string;
+  cursoId: number;
+  completed?: boolean; // <-- para el progreso
+}

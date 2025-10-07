@@ -1,7 +1,7 @@
 {
   "usuarios": [
     {
-      "id": 1,
+      "id": "1",
       "nombre": "Ricardo",
       "apellidos": "Uribe",
       "username": "Ricardo21",
@@ -10,7 +10,7 @@
       "isactive": true
     },
     {
-      "id": 2,
+      "id": "2",
       "nombre": "Viviana",
       "apellidos": "Alvarez",
       "username": "Viviana12",
@@ -27,7 +27,17 @@
       "confirmPassword": "yisus1234",
       "role": "Profesor",
       "isactive": true,
-      "id": 3
+      "id": "3"
+    },
+    {
+      "id": "2d94",
+      "nombre": "",
+      "apellidos": "",
+      "username": "",
+      "password": "",
+      "confirmPassword": "",
+      "role": "",
+      "isactive": true
     }
   ]
 }

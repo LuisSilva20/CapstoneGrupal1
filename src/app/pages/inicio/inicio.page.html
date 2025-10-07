@@ -1,45 +1,24 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
     <ion-title>DriveQuiz</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Home</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <h3 class="ion-text-center" style="font-weight: bold;color: white;">Bienvenido! {{nombre}}</h3>
+  <h3 class="ion-text-center" style="font-weight: bold; color: white;">
+    Bienvenido! {{ nombre }}
+  </h3>
 
   <ion-card>
-  <ion-card-header class="encabezado">
-    <img src="assets/cordinadora.jpg">
-      <ion-card-subtitle>Cordinadora de carrera</ion-card-subtitle>
-      <ion-card-title style="color: gray;">Nuevas ideas</ion-card-title>
+    <ion-card-header>
+      <ion-card-title>Contenido Principal</ion-card-title>
+      <ion-card-subtitle>Subtítulo</ion-card-subtitle>
     </ion-card-header>
-
-  <ion-card-content class="encabezado">
-    <p>
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem impedit aliquid illo? Repellat, quisquam consequatur provident, repellendus, maiores saepe quibusdam officiis dolores culpa assumenda autem eaque quod. Quae, distinctio facilis!
-    </p>
-  </ion-card-content>
-</ion-card> 
-
-<ion-card>
-  <ion-card-header class="contenido">
-    <img src="assets/maipu.jfif">
-      <ion-card-subtitle>Sede maipu</ion-card-subtitle>
-      <ion-card-title style="color: gray;">La sede mas grande</ion-card-title>
-    </ion-card-header>
-
-  <ion-card-content class="contenido">
-    <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequatur veritatis commodi atque dolorem, illo excepturi sapiente itaque praesentium laudantium odit saepe accusantium quas eum est. Sapiente placeat ipsa dolores.
-    </p>
-  </ion-card-content>
-</ion-card> 
+    <ion-card-content>
+      Aquí va información relevante
+    </ion-card-content>
+  </ion-card>
 </ion-content>
-
-

@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{ tree?.title || 'Curso' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card *ngIf="tree">
+    <ion-card-header>
+      <ion-card-subtitle>{{ tree.description }}</ion-card-subtitle>
+      <ion-card-title>Progreso: {{ progreso | number: '1.0-0' }}%</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-progress-bar [value]="progreso/100"></ion-progress-bar>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="tree">
+    <ion-item *ngFor="let lesson of tree.lessons">
+      <ion-label>
+        {{ lesson.title }}
+        <p *ngIf="lesson.completed">✅ Completada</p>
+      </ion-label>
+      <ion-button fill="outline" size="small" (click)="setActiveLesson(lesson)">
+        {{ lesson.completed ? 'Revisar' : 'Estudiar' }}
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-modal [isOpen]="activeLesson !== null">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{ activeLesson?.title }}</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeLesson()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <p>{{ activeLesson?.contenido }}</p>
+      <ion-button expand="block" color="success" (click)="completeLesson(activeLesson!.id)">
+        {{ activeLesson?.completed ? 'Lección Completada ✓' : 'Marcar como Completada' }}
+      </ion-button>
+    </ion-content>
+  </ion-modal>
+</ion-content>

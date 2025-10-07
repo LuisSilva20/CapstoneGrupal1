@@ -1,0 +1,77 @@
+/* Fondo general con gradiente rojizo */
+ion-content {
+  --background: linear-gradient(135deg, #ff512f, #dd2476);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 16px;
+  min-height: 100%;
+}
+
+/* Bienvenida centrada */
+h3.ion-text-center {
+  margin: 20px 0;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ffcccc; /* tono rojizo */
+  text-align: center;
+}
+
+/* Tarjetas */
+ion-card {
+  width: 100%;
+  max-width: 400px;
+  margin: 12px auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.1); /* ligera transparencia */
+}
+
+/* Encabezado de tarjetas */
+ion-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Imagen dentro de tarjeta */
+ion-card-header img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtítulo de tarjeta */
+ion-card-subtitle {
+  color: white;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+/* Título de tarjeta */
+ion-card-title {
+  color: gray;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* Contenido de tarjeta */
+ion-card-content {
+  color: white;
+  font-size: 0.9rem;
+  line-height: 1.4rem;
+  text-align: center;
+}
+
+/* Contenedor de las tarjetas centrado */
+ion-content > ion-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

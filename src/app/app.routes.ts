@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { IniciadoGuard } from './data/guards/iniciado.guard';
+import { IniciadoGuard } from './guards/iniciado.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'registrarse',
+    redirectTo: 'home',
     pathMatch: 'full',
   },
   {
@@ -24,5 +24,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/inicio/inicio.page').then( m => m.InicioPage),
     canActivate: [IniciadoGuard]
   },
+  {
+    path: 'tree-detail',
+    loadComponent: () => import('./pages/tree-detail/tree-detail.page').then( m => m.TreeDetailPage),
+    canActivate: [IniciadoGuard]
+  },
+
 
 ];

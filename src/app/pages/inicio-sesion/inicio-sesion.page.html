@@ -1,65 +1,40 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" text="Back" color="primary"></ion-back-button>
+      <ion-back-button defaultHref="/" color="primary"></ion-back-button>
     </ion-buttons>
-    <ion-title></ion-title>
+    <ion-title>Inicio de Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <div class="center-container">
-
-    <!-- Logo centrado -->
     <ion-card class="imgholder">
-      <img src="../../../assets/icon/logo.jpg" alt="Duoc Logo">
+      <img src="../../../assets/icon/logo.jpg" alt="Logo">
     </ion-card>
 
-    <!-- Formulario con scroll si es necesario -->
     <div class="scroll-wrapper">
       <ion-card>
-        <ion-card-header class="contenido">
+        <ion-card-header>
           <ion-card-title>Inicio de Sesión</ion-card-title>
         </ion-card-header>
-
-        <ion-card-content class="contenido">
+        <ion-card-content>
           <form [formGroup]="inicioSesionForm">
-            <ion-list class="contenido">
+            <ion-list>
               <ion-item>
                 <ion-label position="floating">Username</ion-label>
-                <ion-input type="text" formControlName="username" [(ngModel)]="usuario.username"></ion-input>
+                <ion-input type="text" formControlName="username"></ion-input>
               </ion-item>
-              <div *ngIf="inicioSesionForm.get('username')?.invalid && (inicioSesionForm.get('username')?.dirty || inicioSesionForm.get('username')?.touched)">
-                <div style="color:red" *ngIf="inicioSesionForm.get('username')?.hasError('required')">
-                  *Username es obligatorio
-                </div>
-                <div style="color:red" *ngIf="inicioSesionForm.get('username')?.hasError('minlength')">
-                  *Username debe tener mínimo 8 caracteres
-                </div>
-              </div>
-
               <ion-item>
-                <ion-label position="floating">Contraseña</ion-label>
-                <ion-input type="password" formControlName="password" [(ngModel)]="usuario.password"></ion-input>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input type="password" formControlName="password"></ion-input>
               </ion-item>
-              <div *ngIf="inicioSesionForm.get('password')?.invalid && (inicioSesionForm.get('password')?.dirty || inicioSesionForm.get('password')?.touched)">
-                <div style="color:red" *ngIf="inicioSesionForm.get('password')?.hasError('required')">
-                  *Password es obligatorio
-                </div>
-                <div style="color:red" *ngIf="inicioSesionForm.get('password')?.hasError('minlength')">
-                  *Password debe tener mínimo 8 caracteres
-                </div>
-              </div>
 
               <ion-row>
-                <ion-col size="12">
-                  <ion-button (click)="inicioSesion()" [disabled]="!inicioSesionForm.valid" expand="block" color="primary" shape="round">
-                    Iniciar Sesión
-                  </ion-button>
+                <ion-col>
+                  <ion-button expand="block" (click)="inicioSesion()">Iniciar Sesión</ion-button>
                 </ion-col>
               </ion-row>
-
-              <ion-label routerLink="/registrarse" color="primary">Registrarse</ion-label>
             </ion-list>
           </form>
         </ion-card-content>
