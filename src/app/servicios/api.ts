@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User, Users, Curso, Leccion } from '../interfaces/interfaces';
+import { User, Curso, Leccion } from '../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -11,20 +11,21 @@ export class Api {
   constructor(private http: HttpClient) {}
 
   // ==== USUARIOS ====
-  listarUsuarios(): Observable<Users> {
-    return this.http.get<Users>(`${environment.apiUrl}/usuarios`);
+  listarUsuarios(): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}/usuarios`);
   }
 
   CrearUsuario(newUsuario: User): Observable<User> {
     return this.http.post<User>(`${environment.apiUrl}/usuarios`, newUsuario);
   }
 
-  GetAllUsers(): Observable<Users> {
-    return this.http.get<Users>(`${environment.apiUrl}/usuarios`);
+  GetAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}/usuarios`);
   }
 
-  GetUserById(username: string): Observable<Users> {
-    return this.http.get<Users>(`${environment.apiUrl}/usuarios/?username=${username}`);
+  // Ahora devuelve un array de User[]
+  GetUserById(username: string): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.apiUrl}/usuarios/?username=${username}`);
   }
 
   IsLogged(): boolean {
@@ -51,4 +52,18 @@ export class Api {
   CrearLeccion(newLeccion: Leccion): Observable<Leccion> {
     return this.http.post<Leccion>(`${environment.apiUrl}/lecciones`, newLeccion);
   }
+
+  // ==== EXÁMENES ====
+GetPreguntas(): Observable<any[]> {
+  return this.http.get<any[]>(`${environment.apiUrl}/preguntas`);
+}
+
+GuardarResultado(username: string, puntaje: number): Observable<any> {
+  return this.http.post(`${environment.apiUrl}/resultados`, {
+    usuario: username,
+    puntaje,
+    fecha: new Date()
+  });
+}
+
 }

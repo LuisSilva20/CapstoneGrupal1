@@ -1,0 +1,62 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <!-- Avatar y datos personales -->
+  <ion-card *ngIf="usuario" class="perfil-card">
+    <ion-card-header class="perfil-header">
+      <ion-avatar class="perfil-avatar">
+        <ion-icon name="person-circle-outline" size="large"></ion-icon>
+      </ion-avatar>
+      <ion-card-title>{{ usuario.username }}</ion-card-title>
+      <ion-card-subtitle>{{ usuario.role }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <p><strong>Email:</strong> {{ usuario.email || 'No registrado' }}</p>
+      <p><strong>Estado:</strong> {{ usuario.isactive ? 'Activo' : 'Inactivo' }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Progreso de cursos -->
+  <ion-card *ngIf="cursos.length > 0">
+    <ion-card-header>
+      <ion-card-title>Progreso de Cursos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let curso of cursos" (click)="abrirCurso(curso.id)" button>
+          <ion-icon slot="start" name="school-outline"></ion-icon>
+          <ion-label>
+            {{ curso.titulo }}
+            <p>{{ curso.progreso | number: '1.0-0' }}% completado</p>
+          </ion-label>
+          <ion-progress-bar [value]="curso.progreso / 100"></ion-progress-bar>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Sin cursos -->
+  <ion-card *ngIf="cursos.length === 0">
+    <ion-card-content>
+      <p>No has iniciado ningún curso aún.</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botón de cierre de sesión -->
+  <div class="logout-container">
+    <ion-button expand="block" color="danger" shape="round" (click)="logout()">
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      Cerrar Sesión
+    </ion-button>
+  </div>
+
+</ion-content>

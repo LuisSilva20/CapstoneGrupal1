@@ -1,25 +1,31 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
     <ion-title>{{ tree?.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
+
+  <!-- Información general del curso -->
   <ion-card *ngIf="tree">
     <ion-card-header>
       <ion-card-subtitle>{{ tree.description }}</ion-card-subtitle>
-      <ion-card-title>Progreso: {{ progreso | number: '1.0-0' }}%</ion-card-title>
+      <ion-card-title>Progreso: {{ (progreso * 100) | number:'1.0-0' }}%</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-progress-bar [value]="progreso / 100"></ion-progress-bar>
+      <ion-progress-bar [value]="progreso"></ion-progress-bar>
     </ion-card-content>
   </ion-card>
 
+  <!-- Lista de lecciones -->
   <ion-list *ngIf="tree">
     <ion-item *ngFor="let lesson of tree.lessons">
       <ion-label>
         {{ lesson.titulo }}
-        <p *ngIf="lesson.completed">✅ Completada</p>
+        <p *ngIf="lesson.completed">✅ Aprendido</p>
       </ion-label>
       <ion-button fill="outline" size="small" (click)="setActiveLesson(lesson)">
         {{ lesson.completed ? 'Revisar' : 'Estudiar' }}
@@ -27,7 +33,8 @@
     </ion-item>
   </ion-list>
 
-  <ion-modal [isOpen]="activeLesson !== null">
+  <!-- Modal de lección -->
+  <ion-modal [isOpen]="activeLesson !== null" backdropDismiss="false">
     <ion-header>
       <ion-toolbar>
         <ion-title>{{ activeLesson?.titulo }}</ion-title>
@@ -38,10 +45,29 @@
     </ion-header>
 
     <ion-content class="ion-padding">
-      <p>{{ activeLesson?.contenido }}</p>
-      <ion-button expand="block" color="success" (click)="completeLesson(activeLesson!.id)">
-        {{ activeLesson?.completed ? 'Lección Completada ✓' : 'Marcar como Completada' }}
-      </ion-button>
+      <ion-card *ngIf="activeLesson">
+        <ion-card-header>
+          <ion-card-title>{{ activeLesson.titulo }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+
+          <div *ngFor="let item of activeLesson.material" class="material-item">
+            <p *ngIf="item.tipo === 'texto'">{{ item.valor }}</p>
+
+            <ul *ngIf="item.tipo === 'lista'">
+              <li *ngFor="let li of getLista(item)">{{ li }}</li>
+            </ul>
+
+            <ion-img *ngIf="item.tipo === 'imagen'" [src]="item.valor"></ion-img>
+          </div>
+
+          <ion-button expand="block" color="success" (click)="marcarAprendido()">
+            {{ activeLesson.completed ? 'Lección Aprendida ✓' : 'Marcar como Aprendida' }}
+          </ion-button>
+
+        </ion-card-content>
+      </ion-card>
     </ion-content>
   </ion-modal>
+
 </ion-content>

@@ -4,7 +4,6 @@ export interface Users {
   password: string;
   role: string;
   isactive: boolean;
-  cursoId?: number; // Curso asignado al usuario
 }
 
 export interface User {
@@ -15,7 +14,6 @@ export interface User {
   confirmPassword: string;
   role: string;
   isactive: boolean;
-  cursoId?: number;
 }
 
 export interface Curso {
@@ -26,10 +24,16 @@ export interface Curso {
   lessons?: Leccion[];
 }
 
+export interface MaterialItem {
+  tipo: 'texto' | 'imagen' | 'lista';
+  valor: string | string[];
+}
+
 export interface Leccion {
   id: number;
+  cursoId: number;
   titulo: string;
   contenido: string;
-  cursoId: number;
-  completed?: boolean; // Para progreso
+  completed?: boolean;
+  material?: MaterialItem[];
 }

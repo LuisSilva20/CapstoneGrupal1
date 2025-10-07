@@ -12,7 +12,19 @@
     <ion-content>
       <ion-list>
         <ion-menu-toggle auto-hide="false" *ngFor="let item of componentes">
-          <ion-item [routerLink]="item.redirecTo" routerDirection="root">
+          <ion-item
+            *ngIf="item.redirecTo"
+            [routerLink]="item.redirecTo"
+            routerDirection="root"
+          >
+            <ion-icon [name]="item.icon" slot="start"></ion-icon>
+            <ion-label>{{ item.name }}</ion-label>
+          </ion-item>
+
+          <ion-item
+            *ngIf="item.action && !item.redirecTo"
+            (click)="item.action()"
+          >
             <ion-icon [name]="item.icon" slot="start"></ion-icon>
             <ion-label>{{ item.name }}</ion-label>
           </ion-item>

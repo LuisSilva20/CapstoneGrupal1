@@ -1,23 +1,39 @@
-.completed {
-  --background: #e8f5e9;
+.modal-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-ion-progress-bar {
-  margin-top: 10px;
-  border-radius: 4px;
-  height: 10px;
+.modal-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-ion-modal {
-  --background: #ffffff;
-  border-radius: 12px;
+.modal-text {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 1rem;
 }
 
-ion-card {
-  margin-bottom: 1.2rem;
+.modal-list {
+  text-align: left;
+  margin-bottom: 10px;
+  padding-left: 20px;
 }
 
-h3 {
-  color: #1e88e5;
-  margin-bottom: 1rem;
+.modal-img {
+  max-width: 100%;
+  margin-bottom: 15px;
+  border-radius: 10px;
+}
+
+.modal-button {
+  margin-top: 15px;
 }

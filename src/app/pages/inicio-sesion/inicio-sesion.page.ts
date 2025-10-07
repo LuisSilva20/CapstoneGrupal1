@@ -1,15 +1,37 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonItem,
+  IonLabel,
+  IonButton,
+  IonInput,
+  IonList,
+  IonToast,
+  IonNote,
+  IonRow,
+  IonCol
+} from '@ionic/angular/standalone';
 import { Api } from 'src/app/servicios/api';
+import { Router } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
+import { User } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-inicio-sesion',
+  standalone: true,
   templateUrl: './inicio-sesion.page.html',
   styleUrls: ['./inicio-sesion.page.scss'],
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -23,43 +45,88 @@ import { Api } from 'src/app/servicios/api';
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
-    IonList,
     IonItem,
     IonLabel,
+    IonButton,
+    IonInput,
+    IonList,
+    IonToast,
+    IonNote,
     IonRow,
-    IonCol,
-    IonButton
-  ]
+    IonCol
+  ],
 })
 export class InicioSesionPage {
   inicioSesionForm: FormGroup;
 
-  constructor(private builder: FormBuilder, private api: Api, private router: Router) {
-    this.inicioSesionForm = this.builder.group({
-      username: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)])
+  constructor(
+    private fb: FormBuilder,
+    private api: Api,
+    private router: Router,
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController
+  ) {
+    this.inicioSesionForm = this.fb.group({
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]],
     });
   }
 
-  inicioSesion() {
-    if (!this.inicioSesionForm.valid) return;
+  async iniciarSesion() {
+    if (!this.inicioSesionForm.valid) {
+      this.showAlert('Error', 'Por favor completa todos los campos correctamente.');
+      return;
+    }
 
-    const username = this.inicioSesionForm.value.username;
+    const { username, password } = this.inicioSesionForm.value;
 
-    this.api.GetUserById(username).subscribe((resp: any) => {
-      if (!resp.length) return alert('Usuario no existe');
+    try {
+      // Aseguramos que resp sea siempre un array
+      const resp: User[] = (await this.api.GetUserById(username).toPromise()) ?? [];
+
+      if (!resp || resp.length === 0) {
+        this.showAlert('Usuario no existe', 'Debe registrarse primero.');
+        return;
+      }
+
       const usuario = resp[0];
 
-      if (!usuario.isactive) return alert('Usuario inactivo');
-      if (usuario.password !== this.inicioSesionForm.value.password) return alert('Contraseña incorrecta');
+      if (!usuario.isactive) {
+        this.showAlert('Usuario inactivo', 'Contacta al administrador.');
+        return;
+      }
 
-      // Guardar sesión
+      if (usuario.password !== password) {
+        this.showAlert('Error', 'Contraseña incorrecta.');
+        return;
+      }
+
+      // Guardamos datos en sesión
       sessionStorage.setItem('username', usuario.username);
       sessionStorage.setItem('userrole', usuario.role);
       sessionStorage.setItem('ingresado', 'true');
-      sessionStorage.setItem('userCursoId', usuario.cursoId?.toString() || '1');
+      (usuario as any).idCurso && sessionStorage.setItem('userCursoId', (usuario as any).idCurso.toString());
+
+      const toast = await this.toastCtrl.create({
+        message: 'Sesión iniciada correctamente!',
+        duration: 2000,
+      });
+      toast.present();
 
       this.router.navigateByUrl('/inicio');
+
+    } catch (error) {
+      console.error(error);
+      this.showAlert('Error', 'Ocurrió un error al intentar iniciar sesión.');
+    }
+  }
+
+  private async showAlert(header: string, message: string) {
+    const alert = await this.alertCtrl.create({
+      header,
+      message,
+      buttons: ['Ok'],
     });
+    await alert.present();
   }
 }
