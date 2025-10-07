@@ -13,37 +13,24 @@ interface Componente {
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  imports: [IonRouterOutlet, IonLabel, 
-    IonApp,
-    IonMenu,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonList,
-    IonItem,
-    IonIcon,
-    IonMenuToggle,
-    CommonModule,
-    RouterModule
-  ],
+  imports: [IonRouterOutlet, IonLabel, IonApp, IonMenu, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonIcon, IonMenuToggle, CommonModule, RouterModule],
 })
 export class AppComponent implements OnInit {
   nombre: string | null = '';
-  userCourseId: number = 1;
+  userCursoId: number = 1;
 
   componentes: Componente[] = [
-    { name: 'Perfil', redirecTo: '/inicio', icon: 'home-outline' },
-    { name: 'Cursos', redirecTo: '', icon: 'school-outline' }, 
+    { name: 'Inicio', redirecTo: '/inicio', icon: 'home-outline' },
+    { name: 'Cursos', redirecTo: '', icon: 'school-outline' },
     { name: 'Examen', redirecTo: '/registrarse', icon: 'person-add-outline' },
   ];
 
   ngOnInit() {
     this.nombre = sessionStorage.getItem('username') || 'Usuario';
-    const cursoAsignado = sessionStorage.getItem('userCourseId');
-    this.userCourseId = cursoAsignado ? Number(cursoAsignado) : 1;
+    const cursoAsignado = sessionStorage.getItem('userCursoId');
+    this.userCursoId = cursoAsignado ? Number(cursoAsignado) : 1;
 
     const cursoMenu = this.componentes.find(c => c.name === 'Cursos');
-    if (cursoMenu) cursoMenu.redirecTo = `/tree-detail/${this.userCourseId}`;
+    if (cursoMenu) cursoMenu.redirecTo = `/tree-detail`;
   }
 }

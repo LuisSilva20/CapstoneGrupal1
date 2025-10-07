@@ -45,21 +45,19 @@ export class InicioSesionPage {
     if (!this.inicioSesionForm.valid) return;
 
     const username = this.inicioSesionForm.value.username;
+
     this.api.GetUserById(username).subscribe((resp: any) => {
       if (!resp.length) return alert('Usuario no existe');
       const usuario = resp[0];
 
       if (!usuario.isactive) return alert('Usuario inactivo');
+      if (usuario.password !== this.inicioSesionForm.value.password) return alert('Contraseña incorrecta');
 
-      if (usuario.password !== this.inicioSesionForm.value.password) {
-        return alert('Contraseña incorrecta');
-      }
-
-      // Guardar datos en sesión
+      // Guardar sesión
       sessionStorage.setItem('username', usuario.username);
       sessionStorage.setItem('userrole', usuario.role);
       sessionStorage.setItem('ingresado', 'true');
-      sessionStorage.setItem('userCourseId', usuario.idCurso?.toString() || '1');
+      sessionStorage.setItem('userCursoId', usuario.cursoId?.toString() || '1');
 
       this.router.navigateByUrl('/inicio');
     });

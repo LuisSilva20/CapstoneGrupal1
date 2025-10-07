@@ -5,7 +5,7 @@ import { IonContent, IonHeader, IonToolbar, IonTitle, IonCard, IonCardHeader, Io
 
 interface Leccion {
   id: number;
-  title: string;
+  titulo: string;
   contenido: string;
   completed: boolean;
 }
@@ -27,21 +27,21 @@ export class TreeDetailPage implements OnInit {
   activeLesson: Leccion | null = null;
   progreso: number = 0;
 
-  constructor(private route: ActivatedRoute) {}
-
   ngOnInit() {
-    this.treeId = Number(this.route.snapshot.paramMap.get('id'));
+    this.treeId = Number(sessionStorage.getItem('userCursoId') || '1');
     this.loadCurso();
   }
 
   loadCurso() {
-    // Simulamos API
+    // Cursos simulados tipo licencia B
     const lecciones: Leccion[] = [
-      { id: 1, title: 'Lección 1', contenido: 'Contenido de la lección 1', completed: false },
-      { id: 2, title: 'Lección 2', contenido: 'Contenido de la lección 2', completed: false }
+      { id: 1, titulo: 'Normas de Tránsito', contenido: 'Aprende las normas básicas de tránsito.', completed: false },
+      { id: 2, titulo: 'Señales de Advertencia', contenido: 'Conoce las señales de advertencia.', completed: false },
+      { id: 3, titulo: 'Señales de Regulación', contenido: 'Aprende las señales que regulan el tránsito.', completed: false },
+      { id: 4, titulo: 'Velocidades y Seguridad', contenido: 'Límites de velocidad y consejos de seguridad.', completed: false }
     ];
 
-    this.tree = { id: this.treeId, title: `Curso #${this.treeId}`, description: 'Descripción del curso', lessons: lecciones };
+    this.tree = { id: this.treeId, title: `Curso Licencia B`, description: 'Módulos para aprobar la licencia B', lessons: lecciones };
     this.calcularProgreso();
   }
 

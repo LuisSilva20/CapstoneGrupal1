@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>{{ tree?.title || 'Curso' }}</ion-title>
+    <ion-title>{{ tree?.title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,14 +11,14 @@
       <ion-card-title>Progreso: {{ progreso | number: '1.0-0' }}%</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-progress-bar [value]="progreso/100"></ion-progress-bar>
+      <ion-progress-bar [value]="progreso / 100"></ion-progress-bar>
     </ion-card-content>
   </ion-card>
 
   <ion-list *ngIf="tree">
     <ion-item *ngFor="let lesson of tree.lessons">
       <ion-label>
-        {{ lesson.title }}
+        {{ lesson.titulo }}
         <p *ngIf="lesson.completed">✅ Completada</p>
       </ion-label>
       <ion-button fill="outline" size="small" (click)="setActiveLesson(lesson)">
@@ -30,7 +30,7 @@
   <ion-modal [isOpen]="activeLesson !== null">
     <ion-header>
       <ion-toolbar>
-        <ion-title>{{ activeLesson?.title }}</ion-title>
+        <ion-title>{{ activeLesson?.titulo }}</ion-title>
         <ion-buttons slot="end">
           <ion-button (click)="closeLesson()">Cerrar</ion-button>
         </ion-buttons>
