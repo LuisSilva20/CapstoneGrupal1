@@ -1,23 +1,14 @@
-h2 {
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-}
-
-ion-card {
-  margin-top: 20px;
-}
-
-.aprobado {
+.correcta {
   color: green;
   font-weight: bold;
 }
 
-.reprobado {
+.incorrecta {
   color: red;
   font-weight: bold;
 }
 
-ion-progress-bar {
-  margin-top: 12px;
-  margin-bottom: 16px;
+.respuesta-correcta {
+  color: green;
+  font-style: italic;
 }

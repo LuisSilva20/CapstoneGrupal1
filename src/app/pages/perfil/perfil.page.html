@@ -18,45 +18,106 @@
       <ion-card-title>{{ usuario.username }}</ion-card-title>
       <ion-card-subtitle>{{ usuario.role }}</ion-card-subtitle>
     </ion-card-header>
-
     <ion-card-content>
       <p><strong>Email:</strong> {{ usuario.email || 'No registrado' }}</p>
       <p><strong>Estado:</strong> {{ usuario.isactive ? 'Activo' : 'Inactivo' }}</p>
     </ion-card-content>
   </ion-card>
 
-  <!-- Progreso de cursos -->
+  <!-- Cursos realizados -->
   <ion-card *ngIf="cursos.length > 0">
     <ion-card-header>
-      <ion-card-title>Progreso de Cursos</ion-card-title>
+      <ion-card-title>Cursos Realizados</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-list>
-        <ion-item *ngFor="let curso of cursos" (click)="abrirCurso(curso.id)" button>
-          <ion-icon slot="start" name="school-outline"></ion-icon>
-          <ion-label>
-            {{ curso.titulo }}
-            <p>{{ curso.progreso | number: '1.0-0' }}% completado</p>
-          </ion-label>
-          <ion-progress-bar [value]="curso.progreso / 100"></ion-progress-bar>
-        </ion-item>
+        <ion-card *ngFor="let curso of cursos" class="intento-card">
+          <ion-card-header>
+            <ion-card-title>{{ curso.title }}</ion-card-title>
+            <ion-card-subtitle>
+              Progreso: {{ curso.progreso | number:'1.0-0' }}%
+              <ion-progress-bar [value]="curso.progreso / 100" color="success"></ion-progress-bar>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-button expand="block" size="small" color="primary" (click)="toggleDetalleCurso(curso)">
+              {{ curso.mostrarDetalle ? 'Ocultar' : 'Examinar' }}
+            </ion-button>
+            <ng-container *ngIf="curso.mostrarDetalle">
+              <ion-list>
+                <ion-item *ngFor="let l of curso.lessons">
+                  <ion-label>
+                    {{ l.titulo }} - 
+                    <span [ngClass]="{ 'correcta': l.completed, 'incorrecta': !l.completed }">
+                      {{ l.completed ? 'Aprendida' : 'No aprendida' }}
+                    </span>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ng-container>
+          </ion-card-content>
+        </ion-card>
       </ion-list>
     </ion-card-content>
   </ion-card>
 
-  <!-- Sin cursos -->
-  <ion-card *ngIf="cursos.length === 0">
+  <!-- Exámenes realizados -->
+  <ion-card *ngIf="intentos.length > 0">
+    <ion-card-header>
+      <ion-card-title>Exámenes Realizados</ion-card-title>
+      <ion-card-subtitle>
+        <ion-button expand="block" size="small" color="danger" (click)="eliminarTodosExamenes()">
+          Borrar todos los exámenes
+        </ion-button>
+      </ion-card-subtitle>
+    </ion-card-header>
     <ion-card-content>
-      <p>No has iniciado ningún curso aún.</p>
+      <ion-list>
+        <ion-card *ngFor="let intento of intentos; let i = index" class="intento-card">
+          <ion-card-header>
+            <ion-card-title>{{ intento.fecha }}</ion-card-title>
+            <ion-card-subtitle>
+              Puntaje: {{ intento.puntaje | number:'1.0-0' }}%
+              <ion-progress-bar [value]="intento.puntaje / 100" color="success"></ion-progress-bar>
+            </ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-button expand="block" size="small" color="primary" (click)="toggleDetalleExamen(intento)">
+              {{ intento.mostrarDetalle ? 'Ocultar' : 'Examinar' }}
+            </ion-button>
+            <ion-button expand="block" size="small" color="danger" (click)="eliminarExamen(i)">
+              Eliminar este examen
+            </ion-button>
+
+            <ng-container *ngIf="intento.mostrarDetalle">
+              <ion-list>
+                <ion-item *ngFor="let r of intento.respuestas">
+                  <ion-label>
+                    <strong>{{ r.texto }}</strong>
+                    <ion-list>
+                      <ion-item *ngFor="let o of r.opciones; let j = index"
+                                [ngClass]="{
+                                  'correcta': j === r.correcta,
+                                  'incorrecta': j === r.seleccion && j !== r.correcta
+                                }">
+                        {{ o }}
+                      </ion-item>
+                    </ion-list>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ng-container>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 
-  <!-- Botón de cierre de sesión -->
-  <div class="logout-container">
-    <ion-button expand="block" color="danger" shape="round" (click)="logout()">
-      <ion-icon name="log-out-outline" slot="start"></ion-icon>
-      Cerrar Sesión
-    </ion-button>
-  </div>
+  <!-- Mensaje si no hay cursos ni exámenes -->
+  <ion-card *ngIf="cursos.length === 0 && intentos.length === 0">
+    <ion-card-content>
+      <p>No tienes cursos ni exámenes registrados aún.</p>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>

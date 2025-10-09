@@ -10,12 +10,10 @@
 <ion-content [fullscreen]="true">
   <div class="center-container">
 
-    <!-- Logo centrado -->
     <ion-card class="imgholder">
       <img src="../../../assets/logo.jpg" alt="Duoc Logo">
     </ion-card>
 
-    <!-- Formulario con scroll si es necesario -->
     <div class="scroll-wrapper">
       <ion-card>
         <ion-card-header class="contenido">
@@ -27,69 +25,37 @@
             <ion-list>
               <ion-item>
                 <ion-label position="floating">Nombre</ion-label>
-                <ion-input type="text" placeholder="" formControlName="nombre" [(ngModel)]="usuario.nombre"></ion-input>
+                <ion-input type="text" formControlName="nombre"></ion-input>
               </ion-item>
-              <div *ngIf="registerForm.get('nombre')?.invalid && (registerForm.get('nombre')?.dirty || registerForm.get('nombre')?.touched)">
-                <div style="color: red" *ngIf="registerForm.get('nombre')?.hasError('required')">
-                  *El nombre es obligatorio
-                </div>
-                <div style="color:red" *ngIf="registerForm.get('nombre')?.hasError('maxlength')">
-                  *El nombre debe tener un máximo de 15 caracteres
-                </div>
-              </div>
 
               <ion-item>
                 <ion-label position="floating">Apellidos</ion-label>
-                <ion-input type="text" placeholder="" formControlName="apellidos" [(ngModel)]="usuario.apellidos"></ion-input>
+                <ion-input type="text" formControlName="apellidos"></ion-input>
               </ion-item>
-              <div *ngIf="registerForm.get('apellidos')?.invalid && (registerForm.get('apellidos')?.dirty || registerForm.get('apellidos')?.touched)">
-                <div style="color: red" *ngIf="registerForm.get('apellidos')?.hasError('required')">
-                  *Los apellidos son obligatorios
-                </div>
-                <div style="color:red" *ngIf="registerForm.get('apellidos')?.hasError('maxlength')">
-                  *Los apellidos deben tener un máximo de 25 caracteres
-                </div>
-              </div>
 
               <ion-item>
                 <ion-label position="floating">Username</ion-label>
-                <ion-input type="text" formControlName="username" [(ngModel)]="usuario.username"></ion-input>
+                <ion-input type="text" formControlName="username"></ion-input>
               </ion-item>
-              <div *ngIf="registerForm.get('username')?.invalid && (registerForm.get('username')?.dirty || registerForm.get('username')?.touched)">
-                <div style="color:red" *ngIf="registerForm.get('username')?.hasError('required')">
-                  *El username es obligatorio
-                </div>
-                <div style="color:red" *ngIf="registerForm.get('username')?.hasError('minlength')">
-                  *El username debe tener un mínimo de 8 caracteres
-                </div>
-                <div style="color:red" *ngIf="registerForm.get('username')?.hasError('maxlength')">
-                  *El username debe tener un máximo de 16 caracteres
-                </div>
-              </div>
 
               <ion-item>
                 <ion-label position="floating">Contraseña</ion-label>
-                <ion-input type="password" formControlName="password" [(ngModel)]="usuario.password"></ion-input>
+                <ion-input type="password" formControlName="password"></ion-input>
               </ion-item>
-              <div *ngIf="registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)">
-                <div style="color:red" *ngIf="registerForm.get('password')?.hasError('required')">
-                  *La contraseña es obligatoria
-                </div>
-                <div style="color:red" *ngIf="registerForm.get('password')?.hasError('minlength')">
-                  *La contraseña debe tener un mínimo de 8 caracteres
-                </div>
-                <div style="color:red" *ngIf="registerForm.get('password')?.hasError('maxlength')">
-                  *La contraseña debe tener un máximo de 16 caracteres
-                </div>
-              </div>
 
               <ion-item>
                 <ion-label position="floating">Confirmar Contraseña</ion-label>
-                <ion-input type="password" formControlName="confirmPassword" [(ngModel)]="usuario.confirmPassword"></ion-input>
+                <ion-input type="password" formControlName="confirmPassword"></ion-input>
               </ion-item>
             </ion-list>
 
-            <ion-button (click)="Registrarse()" [disabled]="!registerForm.valid" expand="block" fill="solid" color="warning" shape="round">
+            <ion-button 
+              expand="block" 
+              fill="solid" 
+              color="warning" 
+              shape="round"
+              (click)="Registrarse()"
+              [disabled]="!registerForm.valid">
               Registrarse
             </ion-button>
           </form>

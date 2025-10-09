@@ -3,60 +3,100 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Examen</ion-title>
+    <ion-title>Examen Teórico</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <!-- Cargando -->
-  <div *ngIf="cargando" class="ion-text-center">
-    <ion-spinner></ion-spinner>
-    <p>Cargando preguntas...</p>
-  </div>
-
-  <!-- Examen activo -->
-  <ion-card *ngIf="!terminado && preguntas.length > 0 && !cargando">
+  <!-- Reglas antes del examen -->
+  <ion-card *ngIf="mostrarReglas">
     <ion-card-header>
-      <ion-card-title>
-        Pregunta {{ preguntaActual + 1 }} de {{ preguntas.length }}
-      </ion-card-title>
+      <ion-card-title>Reglas para responder el examen</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <h2>{{ preguntas[preguntaActual].texto }}</h2>
-
       <ion-list>
-        <ion-radio-group
-          [value]="respuestasUsuario[preguntas[preguntaActual].id]"
-          (ionChange)="responder($event.detail.value)">
-          <ion-item *ngFor="let opcion of preguntas[preguntaActual].opciones; let i = index">
-            <ion-label>{{ opcion }}</ion-label>
-            <ion-radio slot="start" [value]="i"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
+        <ion-item>1. Lee cuidadosamente cada pregunta.</ion-item>
+        <ion-item>2. Solo puedes seleccionar una opción por pregunta.</ion-item>
+        <ion-item>3. No se puede retroceder a preguntas anteriores.</ion-item>
+        <ion-item>4. El tiempo máximo es de 15 minutos.</ion-item>
+        <ion-item>5. Tu puntaje se calculará al finalizar todas las preguntas.</ion-item>
       </ion-list>
-
-      <ion-progress-bar [value]="(preguntaActual + 1) / preguntas.length"></ion-progress-bar>
-
-      <ion-button expand="block" color="primary" (click)="siguiente()">
-        {{ preguntaActual === preguntas.length - 1 ? 'Finalizar' : 'Siguiente' }}
-      </ion-button>
+      <ion-button expand="block" color="primary" (click)="comenzarExamen()">Comenzar Examen</ion-button>
     </ion-card-content>
   </ion-card>
 
-  <!-- Resultado -->
-  <ion-card *ngIf="terminado && !cargando">
-    <ion-card-header>
-      <ion-card-title>Resultado Final</ion-card-title>
-    </ion-card-header>
-    <ion-card-content class="ion-text-center">
-      <h2>{{ puntaje | number:'1.0-0' }}%</h2>
-      <p *ngIf="puntaje >= 60" class="aprobado">✅ ¡Aprobaste!</p>
-      <p *ngIf="puntaje < 60" class="reprobado">❌ No aprobaste, inténtalo de nuevo.</p>
+  <!-- Spinner mientras carga -->
+  <ion-spinner *ngIf="cargando" name="crescent" class="ion-margin"></ion-spinner>
 
-      <ion-button expand="block" color="success" (click)="reiniciar()">Reintentar</ion-button>
-      <ion-button expand="block" color="medium" routerLink="/inicio">Volver al inicio</ion-button>
-    </ion-card-content>
-  </ion-card>
+  <!-- Examen -->
+  <ng-container *ngIf="!mostrarReglas && !terminado && preguntas.length > 0 && !cargando">
+
+    <!-- Temporizador -->
+    <div class="timer-container">
+      <p>⏱ Tiempo restante: {{ getTiempo() }}</p>
+      <ion-progress-bar [value]="progresoTiempo" color="warning"></ion-progress-bar>
+    </div>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Pregunta {{ preguntaActual + 1 }} de {{ preguntas.length }}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <h2>{{ preguntas[preguntaActual].texto }}</h2>
+
+        <ion-list>
+          <ion-radio-group
+            [value]="respuestasUsuario[preguntas[preguntaActual].id]"
+            (ionChange)="responder($event.detail.value)">
+            <ion-item
+              *ngFor="let opcion of preguntas[preguntaActual].opciones; let i = index">
+              <ion-label>{{ opcion }}</ion-label>
+              <ion-radio slot="start" [value]="i"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+
+        <ion-progress-bar [value]="(preguntaActual + 1) / preguntas.length" color="primary"></ion-progress-bar>
+
+        <ion-button expand="block" color="primary" (click)="siguiente()" [disabled]="!corregida">
+          {{ preguntaActual === preguntas.length - 1 ? 'Finalizar' : 'Siguiente' }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
+
+  <!-- Retroalimentación final -->
+  <ng-container *ngIf="terminado && !cargando">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Resultado Final: {{ puntaje | number:'1.0-0' }}%</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let p of preguntas">
+            <ion-label>
+              <h3>{{ p.texto }}</h3>
+              <ion-list>
+                <ion-item *ngFor="let opcion of p.opciones; let i = index"
+                          [ngClass]="{
+                            'correcta': i === p.correcta,
+                            'incorrecta': i === respuestasUsuario[p.id] && i !== p.correcta
+                          }">
+                  {{ opcion }}
+                </ion-item>
+              </ion-list>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+
+        <ion-button expand="block" color="success" (click)="reiniciar()">Volver a Reglas</ion-button>
+        <ion-button expand="block" color="secondary" (click)="irPerfil()">Ver Perfil</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-container>
 
 </ion-content>

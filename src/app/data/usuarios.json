@@ -6,7 +6,6 @@
       "apellidos": "Uribe",
       "username": "Ricardo21",
       "password": "Rurive21",
-      "role": "Estudiante",
       "isactive": true
     },
     {
@@ -16,7 +15,6 @@
       "username": "Viviana12",
       "password": "Vivianaprofe",
       "confirmPassword": "Vivianaprofe",
-      "role": "Profesora",
       "isactive": true
     },
     {
@@ -25,7 +23,6 @@
       "username": "yisus homosexual",
       "password": "yisus1234",
       "confirmPassword": "yisus1234",
-      "role": "Profesor",
       "isactive": true,
       "id": "3"
     },
@@ -36,7 +33,24 @@
       "username": "",
       "password": "",
       "confirmPassword": "",
-      "role": "",
+      "isactive": true
+    },
+    {
+      "id": "4fb0",
+      "nombre": "",
+      "apellidos": "",
+      "username": "",
+      "password": "",
+      "confirmPassword": "",
+      "isactive": true
+    },
+    {
+      "id": "1bd2",
+      "nombre": "",
+      "apellidos": "",
+      "username": "",
+      "password": "",
+      "confirmPassword": "",
       "isactive": true
     }
   ]

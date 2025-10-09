@@ -103,7 +103,6 @@ export class InicioSesionPage {
 
       // Guardamos datos en sesión
       sessionStorage.setItem('username', usuario.username);
-      sessionStorage.setItem('userrole', usuario.role);
       sessionStorage.setItem('ingresado', 'true');
       (usuario as any).idCurso && sessionStorage.setItem('userCursoId', (usuario as any).idCurso.toString());
 

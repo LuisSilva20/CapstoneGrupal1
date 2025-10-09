@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/app.component.ts
+import { Component } from '@angular/core';
 import {
   IonApp,
   IonMenu,
@@ -46,15 +47,16 @@ interface Componente {
     IonButton
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   nombre: string | null = '';
-  userCourseId: number = 1;
+  userCursoId: number = 1;
 
   componentes: Componente[] = [
-    { name: 'Perfil', redirecTo: '/perfil', icon: 'home-outline' },
+    { name: 'Perfil', redirecTo: '/perfil', icon: 'person-outline' },
     { name: 'Inicio', redirecTo: '/inicio', icon: 'home-outline' },
-    { name: 'Cursos', icon: 'school-outline' }, // ← se actualizará en ngOnInit
-    { name: 'Examen', redirecTo: '/examen', icon: 'person-add-outline' },
+    { name: 'Cursos', icon: 'school-outline' }, // Se actualizará dinámicamente
+    { name: 'Examen', redirecTo: '/examen', icon: 'reader-outline' },
+    { name: 'Estadisticas', redirecTo: '/estadisticas', icon: 'stats-chart-outline' },
     { name: 'Cerrar Sesión', icon: 'log-out-outline', action: () => this.cerrarSesion() },
   ];
 
@@ -63,17 +65,25 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.nombre = sessionStorage.getItem('username') || 'Usuario';
     const cursoAsignado = sessionStorage.getItem('userCursoId');
-    this.userCourseId = cursoAsignado ? Number(cursoAsignado) : 1;
+    this.userCursoId = cursoAsignado ? Number(cursoAsignado) : 1;
 
-    // Asignar redirección de Cursos dinámicamente
+    // Asignar acción del menú "Cursos"
     const cursoMenu = this.componentes.find((c) => c.name === 'Cursos');
     if (cursoMenu) {
-      cursoMenu.action = () => this.router.navigateByUrl(`/tree-detail/${this.userCourseId}`);
+      cursoMenu.action = () => this.router.navigateByUrl('/tree-detail'); // sin parámetro
+    }
+  }
+
+  navegar(componente: Componente) {
+    if (componente.redirecTo) {
+      this.router.navigateByUrl(componente.redirecTo);
+    } else if (componente.action) {
+      componente.action();
     }
   }
 
   cerrarSesion() {
     sessionStorage.clear();
-    this.router.navigateByUrl('/inicio-sesion');
+    this.router.navigateByUrl('/home');
   }
 }
