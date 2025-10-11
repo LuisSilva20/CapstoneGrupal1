@@ -15,14 +15,16 @@ interface PreguntaExamen {
   question: string;
   options: string[];
   correctAnswer: number;
-  explanation: string;
-  seleccion?: number;   // respuesta del usuario
-  correcta?: number;    // índice de la correcta (por compatibilidad)
+  explicacion?: string;
+  userSeleccion?: number;
 }
 
 interface ArbolEstadistica {
   nombre: string;
   preguntasIncorrectas: PreguntaExamen[];
+  totalPreguntas: number;
+  totalAciertos: number;
+  totalErrores: number;
   porcentajeAciertos: number;
 }
 
@@ -44,6 +46,18 @@ export class EstadisticasPage implements OnInit {
   arboles: ArbolEstadistica[] = [];
   filtroAReforzar: boolean = false;
   preguntasInspeccionadas: { [key: number]: boolean } = {};
+
+  todosLosArboles: string[] = [
+    'Siniestros de tránsito',
+    'Los principios de la conducción',
+    'Convivencia Vial',
+    'La persona en el tránsito',
+    'Las y los usuarios vulnerables',
+    'Normas de circulación',
+    'Conducción en circunstancias especiales',
+    'Conducción eficiente',
+    'Informaciones importantes'
+  ];
 
   constructor(private router: Router, private menuCtrl: MenuController) {}
 
@@ -70,39 +84,64 @@ export class EstadisticasPage implements OnInit {
 
     if (!intentos || intentos.length === 0) return;
 
-    const ultimo = intentos[0];
+    const ultimo = intentos[0]; // Tomamos solo el último intento
+
     const arbolMap: { [key: string]: ArbolEstadistica } = {};
 
-    ultimo.respuestas.forEach((r: any) => {
-      const p: PreguntaExamen = {
-        id: r.id,
-        treeId: r.treeId,
-        question: r.question,
-        options: r.options,
-        correctAnswer: r.correctAnswer ?? r.correcta, // compatibilidad
-        explanation: r.explanation,
-        seleccion: r.seleccion,
-        correcta: r.correcta
+    // Inicializamos todos los árboles
+    this.todosLosArboles.forEach(nombre => {
+      arbolMap[nombre] = {
+        nombre,
+        preguntasIncorrectas: [],
+        totalPreguntas: 0,
+        totalAciertos: 0,
+        totalErrores: 0,
+        porcentajeAciertos: 0
       };
+    });
 
-      const treeName = p.treeId?.trim() || 'Sin Categoría';
+    // Iteramos respuestas
+    ultimo.respuestas.forEach((r: any) => {
+      const treeName = r.treeId?.trim() || 'Sin Categoría';
+      const arbol = arbolMap[treeName];
+      if (!arbol) return;
 
-      if (!arbolMap[treeName]) {
-        arbolMap[treeName] = { nombre: treeName, preguntasIncorrectas: [], porcentajeAciertos: 0 };
-      }
+      arbol.totalPreguntas++;
 
-      if (r.seleccion !== (r.correctAnswer ?? r.correcta)) {
-        arbolMap[treeName].preguntasIncorrectas.push(p);
+      if (r.seleccion === r.correcta) {
+        arbol.totalAciertos++;
+      } else {
+        arbol.totalErrores++;
+        arbol.preguntasIncorrectas.push({
+          id: r.id,
+          treeId: r.treeId,
+          question: r.texto,
+          options: r.opciones,
+          correctAnswer: r.correcta,
+          explicacion: r.explicacion,
+          userSeleccion: r.seleccion
+        });
       }
     });
 
-    Object.keys(arbolMap).forEach(treeName => {
-      const total = ultimo.respuestas.filter((r: any) => r.treeId?.trim() === treeName).length;
-      const incorrectas = arbolMap[treeName].preguntasIncorrectas.length;
-      arbolMap[treeName].porcentajeAciertos = ((total - incorrectas) / total) * 100;
+    // Calculamos porcentaje de aciertos
+    Object.values(arbolMap).forEach(arbol => {
+      arbol.porcentajeAciertos = arbol.totalPreguntas > 0
+        ? (arbol.totalAciertos / arbol.totalPreguntas) * 100
+        : 100;
     });
 
-    this.arboles = Object.values(arbolMap).sort((a, b) => a.porcentajeAciertos - b.porcentajeAciertos);
+    // Ordenamos para que se muestren siempre en el orden de todosLosArboles
+    this.arboles = this.todosLosArboles.map(nombre => arbolMap[nombre]);
+  }
+
+  // Cuadrícula 3x3
+  get filasArboles() {
+    const filas = [];
+    for (let i = 0; i < this.arboles.length; i += 3) {
+      filas.push(this.arboles.slice(i, i + 3));
+    }
+    return filas;
   }
 
   irArbol(nombreArbol: string) {
