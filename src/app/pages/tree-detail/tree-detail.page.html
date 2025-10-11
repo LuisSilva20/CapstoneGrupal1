@@ -11,34 +11,32 @@
   <ion-grid>
     <ion-row *ngFor="let tree of knowledgeTrees">
       <ion-col size="12">
-        <ion-card>
+        <ion-card class="tree-card">
+          <ion-img [src]="tree.icon" alt="Icono del árbol" class="tree-icon"></ion-img>
           <ion-card-header>
-            <ion-card-title>{{ tree.name }}</ion-card-title>
-            <ion-card-subtitle>{{ tree.description }}</ion-card-subtitle>
+            <ion-card-title class="tree-title">{{ tree.name }}</ion-card-title>
+            <ion-card-subtitle class="tree-description">{{ tree.description }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <!-- Mostrar skills del árbol -->
-            <p *ngFor="let skill of tree.skills">
-              {{ skill.name }} - <ion-text [color]="skillColor(skill.level)">{{ skill.level }}%</ion-text>
+            <div class="skills-container">
+              <p *ngFor="let skill of tree.skills" class="skill-item">
+                {{ skill.name }} - <ion-text [color]="skillColor(skill.level)">{{ skill.level }}%</ion-text>
+              </p>
+            </div>
 
-            </p>
-
-            <!-- Cursos del árbol -->
-            <ion-row *ngFor="let course of tree.courses">
-              <ion-col size="12" size-md="6">
-                <ion-card>
-                  <ion-img *ngIf="course.icon" [src]="course.icon" alt="Icono curso"></ion-img>
+            <ion-row class="courses-row">
+              <ion-col size="12" size-md="4" *ngFor="let course of tree.courses">
+                <ion-card class="course-card">
+                  <ion-img *ngIf="course.icon" [src]="course.icon" alt="Icono curso" class="course-icon"></ion-img>
                   <ion-card-header>
-                    <ion-card-title>{{ course.title }}</ion-card-title>
+                    <ion-card-title class="course-title">{{ course.title }}</ion-card-title>
                   </ion-card-header>
                   <ion-card-content>
                     <p>{{ course.description }}</p>
                     <ion-progress-bar [value]="course.progress / 100"></ion-progress-bar>
-
                     <ion-button expand="full" color="primary" (click)="markCourseAsLearned(course)">
                       Marcar como aprendido
                     </ion-button>
-
                     <ion-button expand="full" color="secondary" (click)="goToCourse(course)">
                       Examinar curso
                     </ion-button>

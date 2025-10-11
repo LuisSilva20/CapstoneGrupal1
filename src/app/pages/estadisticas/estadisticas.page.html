@@ -13,31 +13,44 @@
     {{ filtroAReforzar ? 'Mostrar Todos' : 'Mostrar Solo Áreas a Reforzar' }}
   </ion-button>
 
-  <ion-card *ngFor="let curso of cursos" [hidden]="filtroAReforzar && curso.porcentajeAciertos >= 80" color="light">
+  <ion-card *ngFor="let arbol of arboles" [hidden]="filtroAReforzar && arbol.porcentajeAciertos >= 80" color="light">
     <ion-card-header>
-      <ion-card-title>{{ curso.nombre }}</ion-card-title>
-      <ion-card-subtitle>Porcentaje de aciertos: {{ curso.porcentajeAciertos | number:'1.0-0' }}%</ion-card-subtitle>
+      <ion-card-title>{{ arbol.nombre }}</ion-card-title>
+      <ion-card-subtitle>Porcentaje de aciertos: {{ arbol.porcentajeAciertos | number:'1.0-0' }}%</ion-card-subtitle>
     </ion-card-header>
+
     <ion-card-content>
+      <ion-progress-bar [value]="arbol.porcentajeAciertos / 100" [color]="arbol.porcentajeAciertos >= 80 ? 'success' : 'danger'"></ion-progress-bar>
 
-      <ion-progress-bar [value]="curso.porcentajeAciertos / 100" [color]="curso.porcentajeAciertos >= 80 ? 'success' : 'danger'"></ion-progress-bar>
-
-      <div *ngIf="curso.preguntasIncorrectas.length > 0" class="ion-margin-top">
+      <div *ngIf="arbol.preguntasIncorrectas.length > 0" class="ion-margin-top">
         <h3>Preguntas a reforzar:</h3>
         <ion-list>
-          <ion-item *ngFor="let p of curso.preguntasIncorrectas">
-            <ion-label>
-              <p>{{ p.texto }}</p>
-              <small>Tu selección: {{ p.seleccion + 1 }}, Correcta: {{ p.correcta + 1 }}</small>
-            </ion-label>
-          </ion-item>
+          <ng-container *ngFor="let p of arbol.preguntasIncorrectas">
+            <ion-item>
+              <ion-label>
+                <p><strong>Pregunta N°{{ p.id }}:</strong> {{ p.question }}</p>
+              </ion-label>
+              <ion-button size="small" color="medium" (click)="toggleInspeccionPregunta(p.id)">
+                {{ preguntasInspeccionadas[p.id] ? 'Ocultar' : 'Examinar' }}
+              </ion-button>
+            </ion-item>
+
+            <!-- Mini tarjeta -->
+            <ion-card *ngIf="preguntasInspeccionadas[p.id]" class="ion-margin-start ion-margin-end" color="light">
+              <ion-card-content>
+                <p><strong>Pregunta:</strong> {{ p.question }}</p>
+                <p><strong>Tu respuesta:</strong> {{ p.options[p.seleccion ?? -1] || 'No respondida' }}</p>
+                <p><strong>Respuesta correcta:</strong> {{ p.options[p.correctAnswer ?? p.correcta] }}</p>
+                <p><em>{{ p.explanation }}</em></p>
+              </ion-card-content>
+            </ion-card>
+          </ng-container>
         </ion-list>
       </div>
 
-      <ion-button expand="block" color="primary" (click)="irCurso(curso.id)" class="ion-margin-top">
-        Reforzar Curso
+      <ion-button expand="block" color="primary" (click)="irArbol(arbol.nombre)" class="ion-margin-top">
+        Reforzar Árbol
       </ion-button>
-
     </ion-card-content>
   </ion-card>
 

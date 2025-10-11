@@ -27,30 +27,12 @@
       "id": "3"
     },
     {
-      "id": "2d94",
-      "nombre": "",
-      "apellidos": "",
-      "username": "",
-      "password": "",
-      "confirmPassword": "",
-      "isactive": true
-    },
-    {
-      "id": "4fb0",
-      "nombre": "",
-      "apellidos": "",
-      "username": "",
-      "password": "",
-      "confirmPassword": "",
-      "isactive": true
-    },
-    {
-      "id": "1bd2",
-      "nombre": "",
-      "apellidos": "",
-      "username": "",
-      "password": "",
-      "confirmPassword": "",
+      "id": 5,
+      "nombre": "as",
+      "apellidos": "as",
+      "username": "asdqwe12",
+      "password": "asdqwe12",
+      "confirmPassword": "asdqwe12",
       "isactive": true
     }
   ]

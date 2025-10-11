@@ -1,21 +1,19 @@
 // src/app/interfaces/interfaces.ts
 
-export interface Users {
-  id: number;
+// ==== USUARIO ====
+export interface User {
+  id?: number;                // opcional al crear; se asigna automáticamente
   username: string;
   password: string;
-  isactive: boolean;
-}
-
-export interface User {
+  confirmPassword?: string;   // opcional (solo para registro)
   nombre: string;
   apellidos: string;
-  username: string;
-  password: string;
-  confirmPassword: string;
   isactive: boolean;
+  progreso?: number;          // porcentaje total del usuario (0–100)
+  cursosCompletados?: number[]; // IDs de cursos completados
 }
 
+// ==== CURSOS Y LECCIONES ====
 export interface Curso {
   id: number;
   titulo: string;
@@ -24,6 +22,16 @@ export interface Curso {
   lessons?: Leccion[];
 }
 
+export interface Leccion {
+  id: number;
+  cursoId: number;
+  titulo: string;
+  contenido: string;
+  completed?: boolean;
+  material?: MaterialItem[];
+}
+
+// ==== MATERIALES DE LECCIÓN ====
 export interface MaterialItemTexto {
   tipo: 'texto';
   valor: string;
@@ -39,18 +47,12 @@ export interface MaterialItemLista {
   valor: string[];
 }
 
-export type MaterialItem = MaterialItemTexto | MaterialItemImagen | MaterialItemLista;
+export type MaterialItem =
+  | MaterialItemTexto
+  | MaterialItemImagen
+  | MaterialItemLista;
 
-export interface Leccion {
-  id: number;
-  cursoId: number;
-  titulo: string;
-  contenido: string;
-  completed?: boolean;
-  material?: MaterialItem[];
-}
-
-// Interfaces de preguntas de examen
+// ==== PREGUNTAS DE EXAMEN ====
 export interface PreguntaJSON {
   id: number;
   treeId: number;
@@ -65,18 +67,19 @@ export interface Pregunta {
   texto: string;
   opciones: string[];
   correcta: number;
-  explanation?: string;
+  explicacion: string;
+  treeId?: string; 
 }
 
-// Árboles de conocimiento
+// ==== ÁRBOLES DE CONOCIMIENTO ====
 export interface Skill {
   name: string;
-  level: number; // 0-100
-  color?: string; 
+  level: number; // 0–100
+  color?: string;
 }
 
 export interface KnowledgeCourse {
-  id: number;               // ← nuevo campo
+  id: number;
   title: string;
   description: string;
   progress: number; // 0–100

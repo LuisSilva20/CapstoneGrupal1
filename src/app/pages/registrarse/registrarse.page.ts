@@ -1,9 +1,29 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { 
-  IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonCardContent, 
-  IonList, IonItem, IonLabel, IonButton, IonBackButton 
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButtons,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonButton,
+  IonBackButton,
+  IonInput,
+  IonText,
 } from '@ionic/angular/standalone';
 import { ToastController } from '@ionic/angular';
 import { Api } from 'src/app/servicios/api';
@@ -31,7 +51,9 @@ import { User } from 'src/app/interfaces/interfaces';
     IonItem,
     IonLabel,
     IonButton,
-    IonBackButton
+    IonBackButton,
+    IonInput,
+    IonText,
   ],
 })
 export class RegistrarsePage {
@@ -44,31 +66,49 @@ export class RegistrarsePage {
     private toastController: ToastController
   ) {
     this.registerForm = this.builder.group({
-      nombre: new FormControl('', [Validators.required, Validators.maxLength(15)]),
-      apellidos: new FormControl('', [Validators.required, Validators.maxLength(25)]),
-      username: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]),
-      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]),
+      nombre: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(15),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/),
+      ]),
+      apellidos: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(25),
+        Validators.pattern(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/),
+      ]),
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16),
+        Validators.pattern(/^[a-zA-Z0-9_]+$/),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16),
+        Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]+$/),
+      ]),
+      confirmPassword: new FormControl('', [Validators.required]),
     });
   }
 
   async Registrarse() {
     if (this.registerForm.invalid) {
-      this.mostrarAlerta('Por favor completa todos los campos correctamente');
+      this.mostrarAlerta('Por favor completa todos los campos correctamente.');
       return;
     }
 
     const formValue = this.registerForm.value;
 
     if (formValue.password !== formValue.confirmPassword) {
-      this.mostrarAlerta('Las contraseñas no coinciden');
+      this.mostrarAlerta('Las contraseñas no coinciden.');
       return;
     }
 
     const usuario: User = {
-      nombre: formValue.nombre,
-      apellidos: formValue.apellidos,
-      username: formValue.username,
+      nombre: formValue.nombre.trim(),
+      apellidos: formValue.apellidos.trim(),
+      username: formValue.username.trim(),
       password: formValue.password,
       confirmPassword: formValue.confirmPassword,
       isactive: true,
@@ -93,5 +133,9 @@ export class RegistrarsePage {
       color: 'warning',
     });
     toast.present();
+  }
+
+  get f() {
+    return this.registerForm.controls;
   }
 }

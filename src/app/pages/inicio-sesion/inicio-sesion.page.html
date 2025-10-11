@@ -1,46 +1,50 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="light">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/" text="Back" color="primary"></ion-back-button>
+      <ion-back-button defaultHref="/" text="Atrás" color="primary"></ion-back-button>
     </ion-buttons>
     <ion-title>Inicio de Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="center-container">
+<ion-content [fullscreen]="true" class="background">
 
-  <!-- Logo centrado -->
-  <ion-card class="imgholder">
-    <img src="../../../assets/logo.jpg" alt="Logo">
-  </ion-card>
+  <div class="center-container">
 
-  <!-- Formulario de inicio de sesión -->
-  <ion-card class="scroll-wrapper">
-    <ion-card-header>
-      <ion-card-title>Ingresa tus credenciales</ion-card-title>
-    </ion-card-header>
+    <!-- Logo centrado -->
+    <ion-card class="imgholder">
+      <img src="../../../assets/logo.jpg" alt="Logo">
+    </ion-card>
 
-    <ion-card-content>
-      <form [formGroup]="inicioSesionForm">
-        <ion-list>
+    <!-- Formulario -->
+    <ion-card class="login-card">
+      <ion-card-header>
+        <ion-card-title>Ingresa tus credenciales</ion-card-title>
+      </ion-card-header>
 
-          <ion-item>
-            <ion-label position="floating">Username</ion-label>
-            <ion-input formControlName="username"></ion-input>
-          </ion-item>
+      <ion-card-content>
+        <form [formGroup]="inicioSesionForm">
+          <ion-list lines="none">
 
-          <ion-item>
-            <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="password" formControlName="password"></ion-input>
-          </ion-item>
+            <ion-item>
+              <ion-label position="floating">Usuario</ion-label>
+              <ion-input formControlName="username"></ion-input>
+            </ion-item>
 
-          <ion-button expand="block" color="primary" shape="round" (click)="iniciarSesion()">
-            Iniciar Sesión
-          </ion-button>
+            <ion-item>
+              <ion-label position="floating">Contraseña</ion-label>
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
 
-        </ion-list>
-      </form>
-    </ion-card-content>
-  </ion-card>
+            <ion-button expand="block" color="warning" shape="round" (click)="iniciarSesion()">
+              Iniciar Sesión
+            </ion-button>
+
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
 
 </ion-content>

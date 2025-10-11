@@ -1,15 +1,12 @@
 .tree-card {
   margin-bottom: 30px;
-}
-
-.shadow-card {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .tree-icon {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
@@ -28,12 +25,11 @@
 .skills-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 
 .skill-item {
-  display: flex;
-  flex-direction: column;
+  font-size: 0.9rem;
 }
 
 .courses-row {
@@ -42,7 +38,7 @@
 }
 
 .course-card {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   border-radius: 10px;
   transition: transform 0.2s ease-in-out;
 }

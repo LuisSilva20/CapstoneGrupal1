@@ -12,3 +12,33 @@
   color: green;
   font-style: italic;
 }
+
+/* ✅ Estilo del mensaje de felicitación */
+.felicitacion {
+  background: linear-gradient(135deg, #4caf50, #2e7d32);
+  color: white;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+  animation: aparecer 0.7s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.timer-container {
+  text-align: center;
+  margin-bottom: 10px;
+}

@@ -3,15 +3,27 @@ import { CommonModule } from '@angular/common';
 import {
   IonHeader, IonToolbar, IonTitle, IonContent, IonCard,
   IonCardHeader, IonCardTitle, IonCardContent, IonList, IonItem,
-  IonLabel, IonProgressBar, IonButton, IonMenuButton, IonButtons, IonCardSubtitle } from '@ionic/angular/standalone';
+  IonLabel, IonProgressBar, IonButton, IonMenuButton, IonButtons,
+  IonCardSubtitle
+} from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
-interface CursoEstadistica {
+interface PreguntaExamen {
   id: number;
+  treeId: string;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+  seleccion?: number;   // respuesta del usuario
+  correcta?: number;    // índice de la correcta (por compatibilidad)
+}
+
+interface ArbolEstadistica {
   nombre: string;
-  porcentajeAciertos: number; // 0-100
-  preguntasIncorrectas: { id: number; texto: string; seleccion: number; correcta: number }[];
+  preguntasIncorrectas: PreguntaExamen[];
+  porcentajeAciertos: number;
 }
 
 @Component({
@@ -19,22 +31,21 @@ interface CursoEstadistica {
   standalone: true,
   templateUrl: './estadisticas.page.html',
   styleUrls: ['./estadisticas.page.scss'],
-  imports: [IonCardSubtitle, 
+  imports: [
     CommonModule,
     IonHeader, IonToolbar, IonTitle, IonContent,
     IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-    IonList, IonItem, IonLabel, IonProgressBar, IonButton, IonMenuButton, IonButtons
+    IonList, IonItem, IonLabel, IonProgressBar, IonButton,
+    IonMenuButton, IonButtons, IonCardSubtitle
   ]
 })
 export class EstadisticasPage implements OnInit {
 
-  cursos: CursoEstadistica[] = [];
+  arboles: ArbolEstadistica[] = [];
   filtroAReforzar: boolean = false;
+  preguntasInspeccionadas: { [key: number]: boolean } = {};
 
-  constructor(
-    private router: Router,
-    private menuCtrl: MenuController
-  ) {}
+  constructor(private router: Router, private menuCtrl: MenuController) {}
 
   ngOnInit() {
     this.cargarEstadisticas();
@@ -44,36 +55,58 @@ export class EstadisticasPage implements OnInit {
     this.menuCtrl.toggle();
   }
 
+  toggleFiltro() {
+    this.filtroAReforzar = !this.filtroAReforzar;
+  }
+
+  toggleInspeccionPregunta(pregId: number) {
+    this.preguntasInspeccionadas[pregId] = !this.preguntasInspeccionadas[pregId];
+  }
+
   cargarEstadisticas() {
     const username = sessionStorage.getItem('username') || 'anon';
     const intentosStr = localStorage.getItem(`intentos_${username}`);
     const intentos = intentosStr ? JSON.parse(intentosStr) : [];
 
-    // Agrupar por curso simulado (para ejemplo simple usamos solo 1 curso)
-    const curso: CursoEstadistica = {
-      id: 1,
-      nombre: 'Licencia B',
-      porcentajeAciertos: 0,
-      preguntasIncorrectas: []
-    };
+    if (!intentos || intentos.length === 0) return;
 
-    if (intentos.length > 0) {
-      const ultimo = intentos[0]; // tomar último intento
-      const total = ultimo.respuestas.length;
-      const correctas = ultimo.respuestas.filter((r: any) => r.seleccion === r.correcta).length;
-      curso.porcentajeAciertos = (correctas / total) * 100;
-      curso.preguntasIncorrectas = ultimo.respuestas.filter((r: any) => r.seleccion !== r.correcta);
-    }
+    const ultimo = intentos[0];
+    const arbolMap: { [key: string]: ArbolEstadistica } = {};
 
-    this.cursos = [curso];
+    ultimo.respuestas.forEach((r: any) => {
+      const p: PreguntaExamen = {
+        id: r.id,
+        treeId: r.treeId,
+        question: r.question,
+        options: r.options,
+        correctAnswer: r.correctAnswer ?? r.correcta, // compatibilidad
+        explanation: r.explanation,
+        seleccion: r.seleccion,
+        correcta: r.correcta
+      };
+
+      const treeName = p.treeId?.trim() || 'Sin Categoría';
+
+      if (!arbolMap[treeName]) {
+        arbolMap[treeName] = { nombre: treeName, preguntasIncorrectas: [], porcentajeAciertos: 0 };
+      }
+
+      if (r.seleccion !== (r.correctAnswer ?? r.correcta)) {
+        arbolMap[treeName].preguntasIncorrectas.push(p);
+      }
+    });
+
+    Object.keys(arbolMap).forEach(treeName => {
+      const total = ultimo.respuestas.filter((r: any) => r.treeId?.trim() === treeName).length;
+      const incorrectas = arbolMap[treeName].preguntasIncorrectas.length;
+      arbolMap[treeName].porcentajeAciertos = ((total - incorrectas) / total) * 100;
+    });
+
+    this.arboles = Object.values(arbolMap).sort((a, b) => a.porcentajeAciertos - b.porcentajeAciertos);
   }
 
-  toggleFiltro() {
-    this.filtroAReforzar = !this.filtroAReforzar;
-  }
-
-  irCurso(cursoId: number) {
-    sessionStorage.setItem('userCursoId', cursoId.toString());
+  irArbol(nombreArbol: string) {
+    sessionStorage.setItem('selectedTree', nombreArbol);
     this.router.navigateByUrl('/tree-detail');
   }
 }

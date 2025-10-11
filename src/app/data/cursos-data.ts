@@ -1,179 +1,267 @@
 import { Curso } from '../interfaces/interfaces';
 
 export const cursosData: Curso[] = [
-  // Seguridad Vial (mantengo igual)
+  // Árbol 1: Siniestros de tránsito
   {
     id: 1,
-    titulo: 'Normas de Tránsito',
-    descripcion: 'Aprende las principales normas y su aplicación en la vía pública para conducir de manera segura y responsable.',
+    titulo: 'Causas de los accidentes',
+    descripcion: 'Identifica las principales causas de siniestros de tránsito y cómo prevenirlos.',
     duracion: '2h',
     lessons: [
-      { id: 1, cursoId: 1, titulo: 'Señales de tránsito', contenido: `Las señales de tránsito son símbolos, figuras o letreros que indican normas, advertencias o prohibiciones en la vía pública. ...`, material: [{ tipo: 'texto', valor: 'Existen señales de advertencia, obligación y prohibición.' }, { tipo: 'imagen', valor: 'assets/senalizacion.png' }] },
-      { id: 2, cursoId: 1, titulo: 'Prioridad de paso', contenido: `La prioridad de paso indica quién tiene el derecho de avanzar primero en intersecciones o cruces...`, material: [{ tipo: 'lista', valor: ['Ceda el paso a quienes ya estén en la intersección', 'Pare en señales de stop', 'Paso peatonal siempre respetado'] }] },
-      { id: 3, cursoId: 1, titulo: 'Límites de velocidad', contenido: `Los límites de velocidad son fundamentales para la seguridad vial...`, material: [{ tipo: 'texto', valor: 'Conducir dentro de los límites de velocidad ayuda a controlar el vehículo y reaccionar ante imprevistos.' }] },
+      { id: 1, cursoId: 1, titulo: 'Errores comunes al conducir', contenido: 'Distracciones, exceso de velocidad y alcohol son causas frecuentes...', material: [{ tipo: 'texto', valor: 'Evita distracciones y respeta las normas.' }, { tipo: 'imagen', valor: 'assets/ejemplo1.png' }] },
+      { id: 2, cursoId: 1, titulo: 'Accidentes más frecuentes', contenido: 'Colisiones frontales, vuelcos y atropellos son los más reportados.', material: [{ tipo: 'texto', valor: 'Conocer los tipos de accidentes ayuda a prevenirlos.' }] },
     ]
   },
   {
     id: 2,
-    titulo: 'Manejo Defensivo',
-    descripcion: 'Aprende técnicas para anticipar riesgos y conducir de manera preventiva.',
-    duracion: '3h',
+    titulo: 'Manejo preventivo',
+    descripcion: 'Aprende técnicas para anticipar riesgos en la vía.',
+    duracion: '2h',
     lessons: [
-      { id: 4, cursoId: 2, titulo: 'Distancia de seguridad', contenido: `Mantener una distancia adecuada entre tu vehículo y el de delante permite reaccionar ante frenadas bruscas...`, material: [{ tipo: 'texto', valor: 'La distancia adecuada previene colisiones y mejora el tiempo de reacción.' }] },
-      { id: 5, cursoId: 2, titulo: 'Anticipación de riesgos', contenido: `Conducir defensivamente implica prever posibles peligros...`, material: [{ tipo: 'texto', valor: 'Observar y anticipar te da ventaja para reaccionar a imprevistos.' }] },
-      { id: 6, cursoId: 2, titulo: 'Manejo en ciudad y carretera', contenido: `En ciudad: respeta semáforos, cruces y peatones. En carretera: usa carriles correctamente y realiza adelantamientos seguros...`, material: [{ tipo: 'texto', valor: 'Conducir según el entorno y condiciones mejora la seguridad.' }] }
+      { id: 3, cursoId: 2, titulo: 'Distancia y velocidad segura', contenido: 'Mantén siempre distancia y respeta límites de velocidad.', material: [{ tipo: 'texto', valor: 'Controla tu velocidad según condiciones.' }] },
+      { id: 4, cursoId: 2, titulo: 'Observación y reacción', contenido: 'Detecta riesgos y actúa antes de que sea tarde.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo2.png' }] },
     ]
   },
   {
     id: 3,
-    titulo: 'Señalización Vial',
-    descripcion: 'Aprende a reconocer todas las señales de tránsito y su correcta interpretación.',
+    titulo: 'Registro y análisis de siniestros',
+    descripcion: 'Aprende a documentar y analizar accidentes para mejorar la seguridad vial.',
     duracion: '1.5h',
     lessons: [
-      { id: 7, cursoId: 3, titulo: 'Tipos de señales', contenido: `Señales de advertencia, obligación y prohibición. Aprende su forma, color y ubicación...`, material: [{ tipo: 'texto', valor: 'Cada señal tiene un significado específico.' }, { tipo: 'imagen', valor: 'assets/senal.png' }] },
-      { id: 8, cursoId: 3, titulo: 'Señales horizontales', contenido: `Marcas en pavimento: carriles, pasos peatonales, líneas de detención...`, material: [{ tipo: 'texto', valor: 'Las señales horizontales guían la conducción visualmente.' }] },
-      { id: 9, cursoId: 3, titulo: 'Semáforos y luces', contenido: `Rojo: detenerse; amarillo: precaución; verde: avanzar...`, material: [{ tipo: 'texto', valor: 'Semáforos y luces auxiliares son esenciales para la seguridad vial.' }] }
+      { id: 5, cursoId: 3, titulo: 'Documentación correcta', contenido: 'Registrar detalles como lugar, hora y causas es fundamental.', material: [{ tipo: 'texto', valor: 'Fotos, notas y testimonios ayudan a prevenir futuros accidentes.' }] },
     ]
   },
 
-  // Primeros Auxilios (contenido mejorado)
+  // Árbol 2: Los principios de la conducción
   {
     id: 4,
-    titulo: 'RCP Básico',
-    descripcion: 'Aprende reanimación cardiopulmonar correctamente.',
+    titulo: 'Fundamentos de la conducción',
+    descripcion: 'Comprende los conceptos básicos para conducir de manera segura.',
     duracion: '2h',
     lessons: [
-      {
-        id: 10,
-        cursoId: 4,
-        titulo: 'Fundamentos de RCP',
-        contenido: `La reanimación cardiopulmonar (RCP) es un procedimiento vital para salvar vidas en caso de paro cardíaco. 
-        Pasos esenciales:
-        1. Verifica seguridad del entorno.
-        2. Comprueba respuesta de la víctima.
-        3. Llama a emergencias.
-        4. Inicia compresiones torácicas fuertes y rápidas (100-120 por minuto).
-        5. Alterna con ventilaciones de rescate si estás entrenado.
-        Practicar regularmente mejora la efectividad y la rapidez de tu reacción.`,
-        material: [
-          { tipo: 'texto', valor: 'Sigue los pasos de compresiones y ventilaciones correctamente. Practica con muñecos de entrenamiento.' }
-        ]
-      }
+      { id: 6, cursoId: 4, titulo: 'Control del vehículo', contenido: 'Domina dirección, frenos y aceleración.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo3.png' }] },
+      { id: 7, cursoId: 4, titulo: 'Postura y ergonomía', contenido: 'Mantén posición correcta para reaccionar rápidamente.', material: [{ tipo: 'texto', valor: 'Ajusta asiento y espejos antes de conducir.' }] },
     ]
   },
   {
     id: 5,
-    titulo: 'Tratamiento de Heridas',
-    descripcion: 'Aprende a tratar cortes, quemaduras y lesiones menores de forma segura.',
-    duracion: '1.5h',
+    titulo: 'Principios defensivos',
+    descripcion: 'Aprende a anticipar y evitar riesgos en la conducción diaria.',
+    duracion: '2h',
     lessons: [
-      {
-        id: 11,
-        cursoId: 5,
-        titulo: 'Cortes y quemaduras',
-        contenido: `Cuando se presenta una herida:
-        - Lava la zona con agua y jabón.
-        - Detén cualquier sangrado aplicando presión.
-        - Aplica antiséptico y cubre con vendaje limpio.
-        - Observa signos de infección.
-        Para quemaduras:
-        - Enfría con agua corriente.
-        - Nunca uses hielo directamente.
-        - Cubre con gasa limpia y busca atención médica si es grave.
-        La higiene y la rapidez son esenciales para prevenir complicaciones.`,
-        material: [
-          { tipo: 'texto', valor: 'Usa guantes y desinfecta correctamente. Mantén la calma y evalúa la gravedad.' }
-        ]
-      }
+      { id: 8, cursoId: 5, titulo: 'Evitar colisiones', contenido: 'Anticipa movimientos de otros conductores y peatones.', material: [{ tipo: 'texto', valor: 'Mantén alerta constante en la vía.' }] },
     ]
   },
   {
     id: 6,
-    titulo: 'Emergencias Médicas',
-    descripcion: 'Saber cómo actuar ante situaciones médicas de riesgo.',
-    duracion: '2h',
+    titulo: 'Normas y ética vial',
+    descripcion: 'Conoce reglas y comportamiento correcto en la conducción.',
+    duracion: '1.5h',
     lessons: [
-      {
-        id: 12,
-        cursoId: 6,
-        titulo: 'Emergencias comunes',
-        contenido: `En emergencias médicas frecuentes:
-        - Desmayos: recuesta a la persona y afloja ropa apretada.
-        - Ataques epilépticos: protege la cabeza y no restrinjas movimientos.
-        - Intoxicaciones: identifica sustancia y llama a servicios de emergencia.
-        Mantén siempre la seguridad propia y de la víctima, y busca ayuda profesional lo antes posible.`,
-        material: [
-          { tipo: 'texto', valor: 'Prioriza la seguridad y llama a emergencias. Mantén la calma y sigue los protocolos de primeros auxilios.' }
-        ]
-      }
+      { id: 9, cursoId: 6, titulo: 'Respeto y cortesía', contenido: 'Respetar semáforos, carriles y demás conductores es esencial.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo4.png' }] },
     ]
   },
 
-  // Situaciones de Emergencia (contenido mejorado)
+  // Árbol 3: Convivencia Vial
   {
     id: 7,
-    titulo: 'Conducción en condiciones adversas',
-    descripcion: 'Aprende a manejar en lluvia, niebla y terrenos difíciles.',
+    titulo: 'Respeto entre conductores',
+    descripcion: 'Aprende cómo la convivencia mejora la seguridad vial.',
     duracion: '2h',
     lessons: [
-      {
-        id: 13,
-        cursoId: 7,
-        titulo: 'Lluvia y pavimento mojado',
-        contenido: `Conducir bajo lluvia o pavimento mojado aumenta el riesgo de derrapes. 
-        Consejos prácticos:
-        - Reduce la velocidad y aumenta la distancia de seguridad.
-        - Evita maniobras bruscas como giros o frenadas fuertes.
-        - Verifica neumáticos y frenos antes de conducir.
-        - Usa luces bajas para mejorar visibilidad.
-        Aplicar estas técnicas reduce accidentes y te da mayor control del vehículo.`,
-        material: [
-          { tipo: 'texto', valor: 'Técnicas para conducción segura en condiciones adversas.' }
-        ]
-      }
+      { id: 10, cursoId: 7, titulo: 'Normas de cortesía', contenido: 'Ceder el paso y evitar discusiones previene accidentes.', material: [{ tipo: 'texto', valor: 'Convivir correctamente reduce riesgos en la vía.' }] },
     ]
   },
   {
     id: 8,
-    titulo: 'Actuación ante accidentes',
-    descripcion: 'Cómo actuar ante un accidente de tránsito de forma segura y eficiente.',
-    duracion: '2h',
+    titulo: 'Señales y comunicación',
+    descripcion: 'Uso correcto de luces, claxon y gestos para una comunicación segura.',
+    duracion: '1.5h',
     lessons: [
-      {
-        id: 14,
-        cursoId: 8,
-        titulo: 'Seguridad y primeros auxilios',
-        contenido: `En caso de accidente:
-        1. Asegura la zona con triángulos y luces de emergencia.
-        2. Evalúa a los heridos y llama a servicios de emergencia.
-        3. Realiza primeros auxilios básicos si es necesario.
-        4. Recoge información del accidente y evita discusiones.
-        Mantener la calma y seguir estos pasos puede salvar vidas y prevenir riesgos adicionales.`,
-        material: [
-          { tipo: 'texto', valor: 'Atender con calma y priorizar seguridad. Usa guantes y protección si es posible.' }
-        ]
-      }
+      { id: 11, cursoId: 8, titulo: 'Indicadores y luces', contenido: 'Usa direccionales y luces de freno correctamente.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo5.png' }] },
     ]
   },
   {
     id: 9,
-    titulo: 'Evacuación y desvíos',
-    descripcion: 'Aprende cómo desviar tráfico y evacuar personas de forma segura.',
+    titulo: 'Resolución de conflictos',
+    descripcion: 'Aprende técnicas para manejar conflictos en la vía sin accidentes.',
+    duracion: '2h',
+    lessons: [
+      { id: 12, cursoId: 9, titulo: 'Manejo de situaciones tensas', contenido: 'Mantén calma y evita confrontaciones con otros conductores.', material: [{ tipo: 'texto', valor: 'Respirar profundo y ceder el paso puede prevenir accidentes.' }] },
+    ]
+  },
+
+  // Árbol 4: La persona en el tránsito
+  {
+    id: 10,
+    titulo: 'Conductores responsables',
+    descripcion: 'Reconoce la importancia de la conducta del conductor en la seguridad.',
+    duracion: '2h',
+    lessons: [
+      { id: 13, cursoId: 10, titulo: 'Atención y concentración', contenido: 'Evita el uso del celular y distracciones.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo6.png' }] },
+    ]
+  },
+  {
+    id: 11,
+    titulo: 'Gestión del estrés',
+    descripcion: 'Aprende a manejar emociones para conducir seguro.',
     duracion: '1.5h',
     lessons: [
-      {
-        id: 15,
-        cursoId: 9,
-        titulo: 'Desvíos y coordinación',
-        contenido: `En situaciones de emergencia o accidente:
-        - Señaliza correctamente rutas alternativas para vehículos y peatones.
-        - Coordina con autoridades y otros conductores.
-        - Mantén comunicación clara y constante.
-        Estas medidas aseguran evacuaciones ordenadas y reducen riesgos de nuevos accidentes.`,
-        material: [
-          { tipo: 'texto', valor: 'Asegura el paso y comunica correctamente a otros conductores.' }
-        ]
-      }
+      { id: 14, cursoId: 11, titulo: 'Control de impulsos', contenido: 'No ceder a la ira o prisa al conducir.', material: [{ tipo: 'texto', valor: 'Practicar técnicas de respiración y paciencia.' }] },
+    ]
+  },
+  {
+    id: 12,
+    titulo: 'Autocuidado',
+    descripcion: 'Conduce solo si estás descansado y en condiciones físicas adecuadas.',
+    duracion: '1.5h',
+    lessons: [
+      { id: 15, cursoId: 12, titulo: 'Salud y conducción', contenido: 'Evita conducir cansado o bajo efectos de medicamentos.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo7.png' }] },
+    ]
+  },
+
+  // Árbol 5: Las y los usuarios vulnerables
+  {
+    id: 13,
+    titulo: 'Peatones',
+    descripcion: 'Seguridad y derechos de los peatones en la vía.',
+    duracion: '2h',
+    lessons: [
+      { id: 16, cursoId: 13, titulo: 'Cruces peatonales', contenido: 'Respeta siempre el paso peatonal.', material: [{ tipo: 'texto', valor: 'Dar prioridad a peatones evita accidentes graves.' }] },
+    ]
+  },
+  {
+    id: 14,
+    titulo: 'Ciclistas',
+    descripcion: 'Normas y respeto hacia quienes usan bicicleta.',
+    duracion: '1.5h',
+    lessons: [
+      { id: 17, cursoId: 14, titulo: 'Carriles y señalización', contenido: 'Usa carriles correctamente y mantén distancia de seguridad.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo8.png' }] },
+    ]
+  },
+  {
+    id: 15,
+    titulo: 'Motociclistas',
+    descripcion: 'Seguridad y normas para la convivencia con motos.',
+    duracion: '2h',
+    lessons: [
+      { id: 18, cursoId: 15, titulo: 'Distancia y visibilidad', contenido: 'Respeta espacio y evita puntos ciegos.', material: [{ tipo: 'texto', valor: 'Mantén siempre buena visibilidad de motociclistas.' }] },
+    ]
+  },
+
+  // Árbol 6: Normas de circulación
+  {
+    id: 16,
+    titulo: 'Señalización vial',
+    descripcion: 'Conoce todas las señales y su interpretación correcta.',
+    duracion: '2h',
+    lessons: [
+      { id: 19, cursoId: 16, titulo: 'Señales verticales', contenido: 'Aprende el significado de señales de advertencia, obligación y prohibición.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo9.png' }] },
+    ]
+  },
+  {
+    id: 17,
+    titulo: 'Semáforos y prioridad',
+    descripcion: 'Comprende el funcionamiento de semáforos y reglas de prioridad.',
+    duracion: '1.5h',
+    lessons: [
+      { id: 20, cursoId: 17, titulo: 'Luces y regulación', contenido: 'Respeta colores y normas de paso.', material: [{ tipo: 'texto', valor: 'Obedece semáforos y señales luminosas.' }] },
+    ]
+  },
+  {
+    id: 18,
+    titulo: 'Límites de velocidad',
+    descripcion: 'Aprende a conducir dentro de los límites legales.',
+    duracion: '1.5h',
+    lessons: [
+      { id: 21, cursoId: 18, titulo: 'Velocidad segura', contenido: 'Adapta velocidad según entorno y condiciones del tránsito.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo10.png' }] },
+    ]
+  },
+
+  // Árbol 7: Conducción en circunstancias especiales
+  {
+    id: 19,
+    titulo: 'Condiciones climáticas',
+    descripcion: 'Aprende a conducir en lluvia, nieve, niebla y viento fuerte.',
+    duracion: '2h',
+    lessons: [
+      { id: 22, cursoId: 19, titulo: 'Lluvia y nieve', contenido: 'Reduce velocidad y aumenta distancia de seguridad.', material: [{ tipo: 'texto', valor: 'Usa luces adecuadas y evita maniobras bruscas.' }] },
+    ]
+  },
+  {
+    id: 20,
+    titulo: 'Terrenos difíciles',
+    descripcion: 'Conduce de manera segura en caminos de tierra o pendientes.',
+    duracion: '2h',
+    lessons: [
+      { id: 23, cursoId: 20, titulo: 'Pendientes y curvas', contenido: 'Maneja con cuidado en curvas pronunciadas y subidas/bajadas.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo11.png' }] },
+    ]
+  },
+  {
+    id: 21,
+    titulo: 'Emergencias en ruta',
+    descripcion: 'Cómo actuar ante problemas mecánicos o accidentes.',
+    duracion: '1.5h',
+    lessons: [
+      { id: 24, cursoId: 21, titulo: 'Averías y accidentes', contenido: 'Mantén seguridad propia y de otros al detener vehículo.', material: [{ tipo: 'texto', valor: 'Señaliza correctamente y llama ayuda si es necesario.' }] },
+    ]
+  },
+
+  // Árbol 8: Conducción eficiente
+  {
+    id: 22,
+    titulo: 'Uso racional de combustible',
+    descripcion: 'Aprende a conducir de manera eficiente y económica.',
+    duracion: '1.5h',
+    lessons: [
+      { id: 25, cursoId: 22, titulo: 'Aceleración y freno', contenido: 'Evita aceleraciones y frenadas bruscas para ahorrar combustible.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo12.png' }] },
+    ]
+  },
+  {
+    id: 23,
+    titulo: 'Mantenimiento preventivo',
+    descripcion: 'Revisa tu vehículo regularmente para evitar problemas y gasto innecesario.',
+    duracion: '1.5h',
+    lessons: [
+      { id: 26, cursoId: 23, titulo: 'Revisiones periódicas', contenido: 'Chequear aceite, frenos y neumáticos regularmente.', material: [{ tipo: 'texto', valor: 'Previene averías y prolonga la vida útil del vehículo.' }] },
+    ]
+  },
+  {
+    id: 24,
+    titulo: 'Técnicas de conducción eficiente',
+    descripcion: 'Aprende técnicas para reducir consumo de combustible y desgaste.',
+    duracion: '2h',
+    lessons: [
+      { id: 27, cursoId: 24, titulo: 'Conducción suave', contenido: 'Mantén velocidad constante y evita aceleraciones innecesarias.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo13.png' }] },
+    ]
+  },
+
+  // Árbol 9: Informaciones importantes
+  {
+    id: 25,
+    titulo: 'Documentos y licencias',
+    descripcion: 'Aprende qué documentos portar y cómo mantenerlos vigentes.',
+    duracion: '1.5h',
+    lessons: [
+      { id: 28, cursoId: 25, titulo: 'Licencia y registro', contenido: 'Siempre portar licencia y documentos del vehículo.', material: [{ tipo: 'texto', valor: 'Documentos actualizados evitan sanciones y problemas legales.' }] },
+    ]
+  },
+  {
+    id: 26,
+    titulo: 'Seguros y obligaciones',
+    descripcion: 'Conoce los seguros obligatorios y tus responsabilidades legales.',
+    duracion: '2h',
+    lessons: [
+      { id: 29, cursoId: 26, titulo: 'Tipos de seguros', contenido: 'Seguro obligatorio, contra terceros y otros.', material: [{ tipo: 'imagen', valor: 'assets/ejemplo14.png' }] },
+    ]
+  },
+  {
+    id: 27,
+    titulo: 'Información vial y aplicaciones',
+    descripcion: 'Aprende a usar información de tránsito y apps de navegación.',
+    duracion: '1.5h',
+    lessons: [
+      { id: 30, cursoId: 27, titulo: 'Apps y mapas', contenido: 'Usa aplicaciones confiables para planificar rutas y evitar accidentes.', material: [{ tipo: 'texto', valor: 'Google Maps, Waze u otras apps oficiales pueden ser útiles.' }] },
     ]
   }
 ];

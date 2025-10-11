@@ -29,10 +29,8 @@
   <!-- Spinner mientras carga -->
   <ion-spinner *ngIf="cargando" name="crescent" class="ion-margin"></ion-spinner>
 
-  <!-- Examen -->
+  <!-- Examen en progreso -->
   <ng-container *ngIf="!mostrarReglas && !terminado && preguntas.length > 0 && !cargando">
-
-    <!-- Temporizador -->
     <div class="timer-container">
       <p>⏱ Tiempo restante: {{ getTiempo() }}</p>
       <ion-progress-bar [value]="progresoTiempo" color="warning"></ion-progress-bar>
@@ -52,8 +50,7 @@
           <ion-radio-group
             [value]="respuestasUsuario[preguntas[preguntaActual].id]"
             (ionChange)="responder($event.detail.value)">
-            <ion-item
-              *ngFor="let opcion of preguntas[preguntaActual].opciones; let i = index">
+            <ion-item *ngFor="let opcion of preguntas[preguntaActual].opciones; let i = index">
               <ion-label>{{ opcion }}</ion-label>
               <ion-radio slot="start" [value]="i"></ion-radio>
             </ion-item>
@@ -69,17 +66,23 @@
     </ion-card>
   </ng-container>
 
-  <!-- Retroalimentación final -->
+  <!-- ✅ Resultado Final -->
   <ng-container *ngIf="terminado && !cargando">
     <ion-card>
       <ion-card-header>
         <ion-card-title>Resultado Final: {{ puntaje | number:'1.0-0' }}%</ion-card-title>
       </ion-card-header>
       <ion-card-content>
+
+        <div *ngIf="mostrarFelicitacion" class="felicitacion">
+          🎉 ¡Felicitaciones! Has aprobado con éxito el examen. 🎉
+        </div>
+
         <ion-list>
           <ion-item *ngFor="let p of preguntas">
             <ion-label>
               <h3>{{ p.texto }}</h3>
+              <p><strong>Árbol:</strong> {{ p.treeId }}</p>
               <ion-list>
                 <ion-item *ngFor="let opcion of p.opciones; let i = index"
                           [ngClass]="{
@@ -89,6 +92,7 @@
                   {{ opcion }}
                 </ion-item>
               </ion-list>
+              <p><em>Explicación:</em> {{ p.explicacion }}</p>
             </ion-label>
           </ion-item>
         </ion-list>
