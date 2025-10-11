@@ -38,9 +38,7 @@
 
     <ion-card>
       <ion-card-header>
-        <ion-card-title>
-          Pregunta {{ preguntaActual + 1 }} de {{ preguntas.length }}
-        </ion-card-title>
+        <ion-card-title>Pregunta {{ preguntaActual + 1 }} de {{ preguntas.length }}</ion-card-title>
       </ion-card-header>
 
       <ion-card-content>
@@ -66,14 +64,13 @@
     </ion-card>
   </ng-container>
 
-  <!-- ✅ Resultado Final -->
+  <!-- Resultado final -->
   <ng-container *ngIf="terminado && !cargando">
     <ion-card>
       <ion-card-header>
         <ion-card-title>Resultado Final: {{ puntaje | number:'1.0-0' }}%</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-
         <div *ngIf="mostrarFelicitacion" class="felicitacion">
           🎉 ¡Felicitaciones! Has aprobado con éxito el examen. 🎉
         </div>
