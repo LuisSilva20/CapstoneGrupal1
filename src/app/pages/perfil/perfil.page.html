@@ -9,7 +9,6 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <!-- Avatar y datos personales -->
   <ion-card *ngIf="usuario" class="perfil-card">
     <ion-card-header class="perfil-header">
       <ion-avatar class="perfil-avatar">
@@ -24,7 +23,6 @@
     </ion-card-content>
   </ion-card>
 
-<!-- NUEVA SECCIÓN: FORTALEZAS Y DEBILIDADES -->
 <ion-card>
   <ion-card-header>
     <ion-card-title>Árboles de Conocimiento</ion-card-title>
@@ -32,7 +30,6 @@
   </ion-card-header>
 
   <ion-card-content>
-    <!-- Fortalezas -->
     <h3 class="fortalezas-title">Fortalezas 💪</h3>
     <div *ngIf="fortalezas.length > 0; else noFortalezas" class="arbol-grid">
       <div *ngFor="let arbol of fortalezas" class="arbol-cell fortaleza" (click)="irArbol(arbol.nombre)">
@@ -45,7 +42,6 @@
       <p class="ion-text-center">Aún no tienes fortalezas destacadas.</p>
     </ng-template>
 
-    <!-- Debilidades -->
     <h3 class="debilidades-title">Debilidades ⚠️</h3>
     <div *ngIf="debilidades.length > 0; else noDebilidades" class="arbol-grid">
       <div *ngFor="let arbol of debilidades" class="arbol-cell debilidad" (click)="irArbol(arbol.nombre)">
@@ -62,7 +58,6 @@
 
 
 
-  <!-- Cursos realizados -->
   <ion-card *ngIf="cursos.length > 0">
     <ion-card-header>
       <ion-card-title>Cursos Realizados</ion-card-title>
@@ -99,7 +94,6 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Exámenes realizados -->
   <ion-card *ngIf="intentos.length > 0">
     <ion-card-header>
       <ion-card-title>Exámenes Realizados</ion-card-title>
@@ -151,7 +145,6 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Mensaje si no hay cursos ni exámenes -->
   <ion-card *ngIf="cursos.length === 0 && intentos.length === 0">
     <ion-card-content>
       <p>No tienes cursos ni exámenes registrados aún.</p>

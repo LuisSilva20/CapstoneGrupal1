@@ -12,8 +12,8 @@ import {
   IonIcon,
   IonMenuToggle,
   IonLabel,
-  IonRouterOutlet,
-  IonButton
+  IonRouterOutlet
+  
 } from '@ionic/angular/standalone';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -44,7 +44,6 @@ interface Componente {
     IonLabel,
     CommonModule,
     RouterModule,
-    IonButton
   ],
 })
 export class AppComponent {

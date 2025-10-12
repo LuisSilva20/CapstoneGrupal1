@@ -8,11 +8,19 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ng-container *ngIf="curso; else noCurso">
-    <h2>{{ curso.titulo }}</h2>
-    <p>{{ curso.descripcion }}</p>
 
-    <div *ngFor="let lesson of curso.lessons">
+  <ng-container *ngIf="curso; else noCurso">
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ curso.titulo }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{ curso.descripcion }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ng-container *ngFor="let lesson of curso.lessons">
       <ion-card>
         <ion-card-header>
           <ion-card-title>{{ lesson.titulo }}</ion-card-title>
@@ -20,26 +28,26 @@
         <ion-card-content>
           <p>{{ lesson.contenido }}</p>
 
-          <div *ngFor="let item of lesson.material">
-            <div *ngIf="item.tipo === 'texto'">
-              <p>{{ item.valor }}</p>
-            </div>
-            <div *ngIf="item.tipo === 'imagen'">
-              <img [src]="item.valor" alt="Imagen del material" style="max-width:100%;">
-            </div>
-            <div *ngIf="item.tipo === 'lista'">
-              <ul>
-                <li *ngFor="let val of item.valor">{{ val }}</li>
-              </ul>
-            </div>
-          </div>
+          <ng-container *ngFor="let item of lesson.material">
+            <p *ngIf="item.tipo === 'texto'">{{ item.valor }}</p>
+            <img *ngIf="item.tipo === 'imagen'" [src]="item.valor" alt="Imagen del material" style="max-width:100%;">
+            <ul *ngIf="item.tipo === 'lista'">
+              <li *ngFor="let val of item.valor">{{ val }}</li>
+            </ul>
+          </ng-container>
 
         </ion-card-content>
       </ion-card>
-    </div>
+    </ng-container>
+
   </ng-container>
 
   <ng-template #noCurso>
-    <p>No se encontró el curso seleccionado.</p>
+    <ion-card>
+      <ion-card-content>
+        <p>No se encontró el curso seleccionado.</p>
+      </ion-card-content>
+    </ion-card>
   </ng-template>
+
 </ion-content>

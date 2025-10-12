@@ -43,6 +43,15 @@
       "password": "lilkai23",
       "confirmPassword": "lilkai23",
       "isactive": true
+    },
+    {
+      "id": 7,
+      "nombre": "Natalia",
+      "apellidos": "Melgarejo",
+      "username": "nato1234",
+      "password": "nato1234",
+      "confirmPassword": "nato1234",
+      "isactive": true
     }
   ]
 }
