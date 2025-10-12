@@ -91,7 +91,6 @@ export class Api {
     return this.http.post<Leccion>(`${environment.apiUrl}/lecciones`, newLeccion);
   }
 
-  // ==== EXÁMENES ====
 
   GetPreguntas(): Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiUrl}/preguntas`);

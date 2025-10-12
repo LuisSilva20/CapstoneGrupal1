@@ -1,27 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonButtons,
-  IonBackButton,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardContent,
-  IonItem,
-  IonLabel,
-  IonButton,
-  IonInput,
-  IonList,
-  IonToast,
-  IonNote,
-  IonRow,
-  IonCol
-} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonBackButton, IonCard, IonCardHeader, IonCardTitle,IonCardContent,
+IonItem, IonLabel, IonButton, IonInput, IonList } from '@ionic/angular/standalone';
 import { Api } from 'src/app/servicios/api';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
@@ -49,11 +30,7 @@ import { User } from 'src/app/interfaces/interfaces';
     IonLabel,
     IonButton,
     IonInput,
-    IonList,
-    IonToast,
-    IonNote,
-    IonRow,
-    IonCol
+    IonList
   ],
 })
 export class InicioSesionPage {
@@ -81,7 +58,6 @@ export class InicioSesionPage {
     const { username, password } = this.inicioSesionForm.value;
 
     try {
-      // Aseguramos que resp sea siempre un array
       const resp: User[] = (await this.api.GetUserById(username).toPromise()) ?? [];
 
       if (!resp || resp.length === 0) {
@@ -101,7 +77,6 @@ export class InicioSesionPage {
         return;
       }
 
-      // Guardamos datos en sesión
       sessionStorage.setItem('username', usuario.username);
       sessionStorage.setItem('ingresado', 'true');
       (usuario as any).idCurso && sessionStorage.setItem('userCursoId', (usuario as any).idCurso.toString());

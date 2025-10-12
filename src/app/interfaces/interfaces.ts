@@ -1,19 +1,75 @@
-// src/app/interfaces/interfaces.ts
-
-// ==== USUARIO ====
 export interface User {
-  id?: number;                // opcional al crear; se asigna automáticamente
+  id?: number;
   username: string;
   password: string;
-  confirmPassword?: string;   // opcional (solo para registro)
+  confirmPassword?: string;
   nombre: string;
   apellidos: string;
   isactive: boolean;
-  progreso?: number;          // porcentaje total del usuario (0–100)
-  cursosCompletados?: number[]; // IDs de cursos completados
+  progreso?: number;
+  cursosCompletados?: number[];
 }
 
-// ==== CURSOS Y LECCIONES ====
+export interface Usuario {
+  id: number;
+  username: string;
+  role: string;
+  email?: string;
+  isactive: boolean;
+}
+
+export interface CursoGuardado {
+  id: number;
+  title: string;
+  lessons: { titulo: string; completed: boolean; fecha?: string }[];
+  progreso: number;
+  mostrarDetalle?: boolean;
+  fecha?: string;
+}
+
+export interface RespuestaPerfil {
+  preguntaId: number;
+  treeId: string;
+  texto: string;
+  opciones: string[];
+  correcta: number;
+  seleccion: number;
+}
+
+export interface IntentoExamen {
+  fecha: string; 
+  fechaFormateada?: string; 
+  puntaje: number;
+  respuestas: RespuestaPerfil[];
+  mostrarDetalle?: boolean;
+}
+
+export interface ArbolPerfil {
+  nombre: string;
+  totalAciertos: number;
+  totalErrores: number;
+  porcentajeAciertos: number;
+}
+
+export interface PreguntaExamen {
+  id: number;
+  treeId: string;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explicacion?: string;
+  userSeleccion?: number;
+}
+
+export interface ArbolEstadistica {
+  nombre: string;
+  preguntasIncorrectas: PreguntaExamen[];
+  totalPreguntas: number;
+  totalAciertos: number;
+  totalErrores: number;
+  porcentajeAciertos: number;
+}
+
 export interface Curso {
   id: number;
   titulo: string;
@@ -31,7 +87,6 @@ export interface Leccion {
   material?: MaterialItem[];
 }
 
-// ==== MATERIALES DE LECCIÓN ====
 export interface MaterialItemTexto {
   tipo: 'texto';
   valor: string;
@@ -52,7 +107,6 @@ export type MaterialItem =
   | MaterialItemImagen
   | MaterialItemLista;
 
-// ==== PREGUNTAS DE EXAMEN ====
 export interface PreguntaJSON {
   id: number;
   treeId: number;
@@ -68,13 +122,12 @@ export interface Pregunta {
   opciones: string[];
   correcta: number;
   explicacion: string;
-  treeId?: string; 
+  treeId?: string;
 }
 
-// ==== ÁRBOLES DE CONOCIMIENTO ====
 export interface Skill {
   name: string;
-  level: number; // 0–100
+  level: number;
   color?: string;
 }
 
@@ -82,7 +135,7 @@ export interface KnowledgeCourse {
   id: number;
   title: string;
   description: string;
-  progress: number; // 0–100
+  progress: number;
   icon?: string;
   curso?: Curso;
 }

@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import {
-  IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-  IonList, IonItem, IonLabel, IonProgressBar, IonRadioGroup, IonRadio, IonButtons, IonMenuButton, IonSpinner, IonCardSubtitle
+import { IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
+  IonList, IonItem, IonLabel, IonProgressBar, IonRadioGroup, IonRadio, IonButtons, IonMenuButton, IonSpinner
 } from '@ionic/angular/standalone';
 
 interface Pregunta {
@@ -16,7 +15,6 @@ interface Pregunta {
   treeId?: string;
 }
 
-// Importa tu JSON de preguntas
 import preguntasJson from '../../data/preguntas-examen.json';
 
 @Component({
@@ -27,7 +25,7 @@ import preguntasJson from '../../data/preguntas-examen.json';
   imports: [
     CommonModule,
     IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
-    IonList, IonItem, IonLabel, IonProgressBar, IonButton, IonRadioGroup, IonRadio, IonButtons, IonMenuButton, IonSpinner, IonCardSubtitle
+    IonList, IonItem, IonLabel, IonProgressBar, IonButton, IonRadioGroup, IonRadio, IonButtons, IonMenuButton, IonSpinner
   ]
 })
 export class ExamenPage implements OnInit {
@@ -59,7 +57,6 @@ export class ExamenPage implements OnInit {
     const arboles = Array.from(new Set(preguntasJson.map(p => p.treeId))).filter(a => a); // Todos los árboles
     const preguntasPorArbol: Pregunta[] = [];
 
-    // 1️⃣ Al menos 3 preguntas por cada árbol
     arboles.forEach(arbol => {
       const preguntasDelArbol = preguntasJson.filter(p => p.treeId === arbol);
       preguntasDelArbol.sort(() => Math.random() - 0.5);
@@ -74,7 +71,6 @@ export class ExamenPage implements OnInit {
       }));
     });
 
-    // 2️⃣ Resto de preguntas hasta 35 aleatoriamente
     const restantes = 35 - preguntasPorArbol.length;
     if (restantes > 0) {
       const usadas = preguntasPorArbol.map(p => p.texto);
@@ -91,7 +87,6 @@ export class ExamenPage implements OnInit {
       }));
     }
 
-    // Mezclar final
     preguntasPorArbol.sort(() => Math.random() - 0.5);
     this.preguntas = preguntasPorArbol;
   }
@@ -120,11 +115,11 @@ export class ExamenPage implements OnInit {
   responder(opcion: number) {
     const id = this.preguntas[this.preguntaActual].id;
     this.respuestasUsuario[id] = opcion;
-    this.corregida = true; // Habilita botón
+    this.corregida = true; 
   }
 
   siguiente() {
-    if (!this.corregida) return; // No avanzar si no eligió opción
+    if (!this.corregida) return; 
     if (this.preguntaActual < this.preguntas.length - 1) {
       this.preguntaActual++;
       this.corregida = this.respuestasUsuario[this.preguntaActual] !== undefined;
@@ -142,7 +137,6 @@ export class ExamenPage implements OnInit {
     this.mostrarFelicitacion = this.puntaje >= 75;
     this.terminado = true;
 
-    // Guardar intento
     const username = sessionStorage.getItem('username') || 'anon';
     const intentosStr = localStorage.getItem(`intentos_${username}`);
     const intentos = intentosStr ? JSON.parse(intentosStr) : [];

@@ -8,25 +8,7 @@ import {
 } from '@ionic/angular/standalone';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
-
-interface PreguntaExamen {
-  id: number;
-  treeId: string;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  explicacion?: string;
-  userSeleccion?: number;
-}
-
-interface ArbolEstadistica {
-  nombre: string;
-  preguntasIncorrectas: PreguntaExamen[];
-  totalPreguntas: number;
-  totalAciertos: number;
-  totalErrores: number;
-  porcentajeAciertos: number;
-}
+import { ArbolEstadistica } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-estadisticas',
@@ -84,11 +66,10 @@ export class EstadisticasPage implements OnInit {
 
     if (!intentos || intentos.length === 0) return;
 
-    const ultimo = intentos[0]; // Tomamos solo el último intento
+    const ultimo = intentos[0]; 
 
     const arbolMap: { [key: string]: ArbolEstadistica } = {};
 
-    // Inicializamos todos los árboles
     this.todosLosArboles.forEach(nombre => {
       arbolMap[nombre] = {
         nombre,
@@ -100,7 +81,6 @@ export class EstadisticasPage implements OnInit {
       };
     });
 
-    // Iteramos respuestas
     ultimo.respuestas.forEach((r: any) => {
       const treeName = r.treeId?.trim() || 'Sin Categoría';
       const arbol = arbolMap[treeName];
@@ -124,18 +104,15 @@ export class EstadisticasPage implements OnInit {
       }
     });
 
-    // Calculamos porcentaje de aciertos
     Object.values(arbolMap).forEach(arbol => {
       arbol.porcentajeAciertos = arbol.totalPreguntas > 0
         ? (arbol.totalAciertos / arbol.totalPreguntas) * 100
         : 100;
     });
 
-    // Ordenamos para que se muestren siempre en el orden de todosLosArboles
     this.arboles = this.todosLosArboles.map(nombre => arbolMap[nombre]);
   }
 
-  // Cuadrícula 3x3
   get filasArboles() {
     const filas = [];
     for (let i = 0; i < this.arboles.length; i += 3) {

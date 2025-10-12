@@ -24,6 +24,44 @@
     </ion-card-content>
   </ion-card>
 
+<!-- NUEVA SECCIÓN: FORTALEZAS Y DEBILIDADES -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Árboles de Conocimiento</ion-card-title>
+    <ion-card-subtitle>Promedio (últimos 3 exámenes)</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content>
+    <!-- Fortalezas -->
+    <h3 class="fortalezas-title">Fortalezas 💪</h3>
+    <div *ngIf="fortalezas.length > 0; else noFortalezas" class="arbol-grid">
+      <div *ngFor="let arbol of fortalezas" class="arbol-cell fortaleza" (click)="irArbol(arbol.nombre)">
+        <div class="arbol-nombre">{{ arbol.nombre }}</div>
+        <div class="porcentaje">{{ arbol.porcentajeAciertos | number:'1.0-0' }}%</div>
+        <ion-progress-bar [value]="arbol.porcentajeAciertos / 100" color="success"></ion-progress-bar>
+      </div>
+    </div>
+    <ng-template #noFortalezas>
+      <p class="ion-text-center">Aún no tienes fortalezas destacadas.</p>
+    </ng-template>
+
+    <!-- Debilidades -->
+    <h3 class="debilidades-title">Debilidades ⚠️</h3>
+    <div *ngIf="debilidades.length > 0; else noDebilidades" class="arbol-grid">
+      <div *ngFor="let arbol of debilidades" class="arbol-cell debilidad" (click)="irArbol(arbol.nombre)">
+        <div class="arbol-nombre">{{ arbol.nombre }}</div>
+        <div class="porcentaje">{{ arbol.porcentajeAciertos | number:'1.0-0' }}%</div>
+        <ion-progress-bar [value]="arbol.porcentajeAciertos / 100" color="danger"></ion-progress-bar>
+      </div>
+    </div>
+    <ng-template #noDebilidades>
+      <p class="ion-text-center">¡Excelente! No tienes debilidades registradas.</p>
+    </ng-template>
+  </ion-card-content>
+</ion-card>
+
+
+
   <!-- Cursos realizados -->
   <ion-card *ngIf="cursos.length > 0">
     <ion-card-header>
@@ -75,7 +113,7 @@
       <ion-list>
         <ion-card *ngFor="let intento of intentos; let i = index" class="intento-card">
           <ion-card-header>
-            <ion-card-title>{{ intento.fecha }}</ion-card-title>
+            <ion-card-title>{{ intento.fechaFormateada }}</ion-card-title>
             <ion-card-subtitle>
               Puntaje: {{ intento.puntaje | number:'1.0-0' }}%
               <ion-progress-bar [value]="intento.puntaje / 100" color="success"></ion-progress-bar>

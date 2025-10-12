@@ -9,36 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { cursosData } from 'src/app/data/cursos-data';
-
-interface Usuario {
-  id: number;
-  username: string;
-  role: string;
-  email?: string;
-  isactive: boolean;
-}
-
-interface CursoGuardado {
-  id: number;
-  title: string;
-  lessons: { titulo: string; completed: boolean; fecha?: string }[];
-  progreso: number;
-  mostrarDetalle?: boolean;
-  fecha?: string;
-}
-
-interface IntentoExamen {
-  fecha: string;
-  puntaje: number;
-  respuestas: {
-    preguntaId: number;
-    texto: string;
-    opciones: string[];
-    correcta: number;
-    seleccion: number;
-  }[];
-  mostrarDetalle?: boolean;
-}
+import { Usuario, CursoGuardado, IntentoExamen, ArbolPerfil } from 'src/app/interfaces/interfaces';
 
 @Component({
   selector: 'app-perfil',
@@ -56,6 +27,21 @@ export class PerfilPage {
   usuario: Usuario | null = null;
   cursos: CursoGuardado[] = [];
   intentos: IntentoExamen[] = [];
+  arboles: ArbolPerfil[] = [];
+  fortalezas: ArbolPerfil[] = [];
+  debilidades: ArbolPerfil[] = [];
+
+  todosLosArboles: string[] = [
+    'Siniestros de tránsito',
+    'Los principios de la conducción',
+    'Convivencia Vial',
+    'La persona en el tránsito',
+    'Las y los usuarios vulnerables',
+    'Normas de circulación',
+    'Conducción en circunstancias especiales',
+    'Conducción eficiente',
+    'Informaciones importantes'
+  ];
 
   constructor(private router: Router, private menuCtrl: MenuController) {}
 
@@ -63,12 +49,12 @@ export class PerfilPage {
     this.cargarUsuario();
     this.cargarCursosGuardados();
     this.cargarExamenesGuardados();
+    this.calcularEstadisticasArboles();
   }
 
   cargarUsuario() {
     const username = sessionStorage.getItem('username');
     if (!username) return;
-
     this.usuario = {
       id: 1,
       username,
@@ -78,7 +64,6 @@ export class PerfilPage {
     };
   }
 
-  // Cursos guardados
   cargarCursosGuardados() {
     const username = sessionStorage.getItem('username') || 'anon';
     const cursosTemp: CursoGuardado[] = [];
@@ -90,7 +75,6 @@ export class PerfilPage {
         const total = lessons.length;
         const completadas = lessons.filter(l => l.completed).length;
 
-        // Obtener título real desde cursosData
         const cursoInfo = cursosData.find(c => c.id === cursoId);
 
         cursosTemp.push({
@@ -108,17 +92,63 @@ export class PerfilPage {
       }
     });
 
-    // Ordenar por fecha más reciente
     this.cursos = cursosTemp.sort((a, b) => (b.fecha! > a.fecha! ? 1 : -1));
   }
 
-  // Exámenes realizados
   cargarExamenesGuardados() {
     const username = sessionStorage.getItem('username') || 'anon';
     const key = `intentos_${username}`;
     const data = localStorage.getItem(key);
     this.intentos = data ? JSON.parse(data) : [];
+
+    this.intentos.forEach(intento => {
+      intento.fechaFormateada = this.formatearFecha(intento.fecha);
+    });
+
     this.intentos.sort((a, b) => (b.fecha > a.fecha ? 1 : -1));
+  }
+
+  formatearFecha(fechaISO: string): string {
+    const fecha = new Date(fechaISO);
+    return fecha.toLocaleDateString('es-ES', {
+      day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+  }
+
+  calcularEstadisticasArboles() {
+    const arbolMap: { [key: string]: ArbolPerfil } = {};
+
+    this.todosLosArboles.forEach(nombre => {
+      arbolMap[nombre] = {
+        nombre,
+        totalAciertos: 0,
+        totalErrores: 0,
+        porcentajeAciertos: 0
+      };
+    });
+
+    const ultimosTres = this.intentos.slice(0, 3);
+
+    ultimosTres.forEach(intento => {
+      intento.respuestas.forEach(r => {
+        const treeName = r.treeId?.trim() || 'Sin Categoría';
+        const arbol = arbolMap[treeName];
+        if (!arbol) return;
+
+        if (r.seleccion === r.correcta) arbol.totalAciertos++;
+        else arbol.totalErrores++;
+      });
+    });
+
+    this.arboles = this.todosLosArboles.map(nombre => {
+      const arbol = arbolMap[nombre];
+      const total = arbol.totalAciertos + arbol.totalErrores;
+      arbol.porcentajeAciertos = total > 0 ? (arbol.totalAciertos / total) * 100 : 100;
+      return arbol;
+    });
+
+    this.fortalezas = this.arboles.filter(a => a.porcentajeAciertos >= 75);
+    this.debilidades = this.arboles.filter(a => a.porcentajeAciertos < 75);
   }
 
   toggleDetalleCurso(curso: CursoGuardado) {
@@ -129,27 +159,26 @@ export class PerfilPage {
     intento.mostrarDetalle = !intento.mostrarDetalle;
   }
 
-  // -----------------------
-  // Eliminar examen individual
-  // -----------------------
   eliminarExamen(index: number) {
     const username = sessionStorage.getItem('username') || 'anon';
-    const key = `intentos_${username}`;
     this.intentos.splice(index, 1);
-    localStorage.setItem(key, JSON.stringify(this.intentos));
+    localStorage.setItem(`intentos_${username}`, JSON.stringify(this.intentos));
+    this.calcularEstadisticasArboles();
   }
 
-  // -----------------------
-  // Eliminar todos los exámenes
-  // -----------------------
   eliminarTodosExamenes() {
     const username = sessionStorage.getItem('username') || 'anon';
-    const key = `intentos_${username}`;
     this.intentos = [];
-    localStorage.removeItem(key);
+    localStorage.removeItem(`intentos_${username}`);
+    this.calcularEstadisticasArboles();
   }
 
   toggleMenu() {
     this.menuCtrl.toggle();
+  }
+
+  irArbol(nombreArbol: string) {
+    sessionStorage.setItem('selectedTree', nombreArbol);
+    this.router.navigateByUrl('/tree-detail');
   }
 }

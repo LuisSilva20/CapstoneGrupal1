@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonItem, IonLabel, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 
@@ -14,7 +14,7 @@ interface Componente {
   standalone: true,
   templateUrl: './inicio.page.html',
   styleUrls: ['./inicio.page.scss'],
-  imports: [IonIcon, 
+  imports: [ 
     CommonModule,
     IonContent,
     IonHeader,
@@ -26,11 +26,7 @@ interface Componente {
     IonCardHeader,
     IonCardTitle,
     IonCardSubtitle,
-    IonCardContent,
-    IonList,
-    IonItem,
-    IonLabel,
-    IonButton
+    IonCardContent
   ]
 })
 export class InicioPage implements OnInit {

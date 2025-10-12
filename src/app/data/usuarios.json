@@ -27,12 +27,21 @@
       "id": "3"
     },
     {
-      "id": 5,
+      "id": "5",
       "nombre": "as",
       "apellidos": "as",
       "username": "asdqwe12",
       "password": "asdqwe12",
       "confirmPassword": "asdqwe12",
+      "isactive": true
+    },
+    {
+      "id": 6,
+      "nombre": "Fabrizzio",
+      "apellidos": "Alvarez",
+      "username": "LilKai23",
+      "password": "lilkai23",
+      "confirmPassword": "lilkai23",
       "isactive": true
     }
   ]
