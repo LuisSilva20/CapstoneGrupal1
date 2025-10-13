@@ -50,6 +50,7 @@ export class PerfilPage {
     this.cargarCursosGuardados();
     this.cargarExamenesGuardados();
     this.calcularEstadisticasArboles();
+    this.calcularProgresoGeneral();
   }
 
   cargarUsuario() {
@@ -59,8 +60,8 @@ export class PerfilPage {
       id: 1,
       username,
       role: 'Estudiante',
-      email: 'usuario@ejemplo.com',
-      isactive: true
+      isactive: true,
+      progreso: 0
     };
   }
 
@@ -103,6 +104,11 @@ export class PerfilPage {
 
     this.intentos.forEach(intento => {
       intento.fechaFormateada = this.formatearFecha(intento.fecha);
+      let correctas = 0;
+      intento.respuestas.forEach(r => {
+        if (r.seleccion === r.correcta) correctas++;
+      });
+      intento.puntaje = (correctas / intento.respuestas.length) * 100;
     });
 
     this.intentos.sort((a, b) => (b.fecha > a.fecha ? 1 : -1));
@@ -149,6 +155,34 @@ export class PerfilPage {
 
     this.fortalezas = this.arboles.filter(a => a.porcentajeAciertos >= 75);
     this.debilidades = this.arboles.filter(a => a.porcentajeAciertos < 75);
+  }
+
+  calcularProgresoGeneral() {
+    if (!this.usuario) return;
+
+    const totalCursos = cursosData.length;
+    if (totalCursos === 0) {
+      this.usuario.progreso = 0;
+      return;
+    }
+
+    let sumaProgresos = 0;
+    const username = sessionStorage.getItem('username') || 'anon';
+
+    cursosData.forEach(curso => {
+      const key = `curso_${username}_${curso.id}`;
+      const data = localStorage.getItem(key);
+
+      if (data) {
+        const lessons = JSON.parse(data);
+        const total = lessons.length;
+        const completadas = lessons.filter((l: any) => l.completed).length;
+        const progresoCurso = total > 0 ? (completadas / total) * 100 : 0;
+        sumaProgresos += progresoCurso;
+      }
+    });
+
+    this.usuario.progreso = Math.round(sumaProgresos / totalCursos);
   }
 
   toggleDetalleCurso(curso: CursoGuardado) {

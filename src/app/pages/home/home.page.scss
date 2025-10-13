@@ -1,11 +1,7 @@
-/* home.page.scss */
-
-/* Quita el fondo por defecto de ion-content */
 ion-content {
   --background: none;
 }
 
-/* Contenedor principal centrado */
 .center-container {
   display: flex;
   flex-direction: column;
@@ -15,19 +11,17 @@ ion-content {
   gap: 20px;
   padding: 16px;
 
-  /* Fondo con gradiente cálido */
   background: linear-gradient(135deg, #ff512f, #dd2476); 
 }
 
-/* Estilo del logo */
 .imgholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1); /* ligero fondo translúcido */
+  background: rgba(255, 255, 255, 0.1);
   padding: 16px;
   border-radius: 50%;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* sombra alrededor del logo */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .imgholder img {
@@ -37,20 +31,19 @@ ion-content {
   object-fit: cover;
 }
 
-/* Contenedor de los botones */
 .button-card {
   width: 100%;
-  max-width: 300px; /* ancho máximo en móviles */
+  max-width: 300px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 8px;
-  background: rgba(255, 255, 255, 0.1); /* fondo translúcido */
+  background: rgba(255, 255, 255, 0.1); 
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* sombra suave para destacar */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); 
 }
 
-/* Botones */
+
 ion-button {
   font-weight: bold;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);

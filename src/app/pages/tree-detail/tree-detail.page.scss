@@ -1,3 +1,9 @@
+ion-header ion-toolbar {
+  --background: #007bff;
+  --color: #fff;       
+}
+
+
 .tree-card {
   margin-bottom: 30px;
   border-radius: 12px;
@@ -58,4 +64,10 @@
 .course-title {
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+ion-button[color="success"] {
+  margin-top: 8px;
+  font-weight: 600;
+  border-radius: 10px;
 }

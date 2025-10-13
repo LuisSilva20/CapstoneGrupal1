@@ -27,15 +27,17 @@ export class TreeDetailPage {
   knowledgeTrees: KnowledgeTree[] = knowledgeTrees;
   allCourses: KnowledgeCourse[] = [];
 
-  constructor(private router: Router, private route: ActivatedRoute, private menuCtrl: MenuController) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private menuCtrl: MenuController
+  ) {}
 
   ngOnInit() {
-    // Extraer todos los cursos
     this.knowledgeTrees.forEach(tree => {
       tree.courses.forEach(course => this.allCourses.push(course));
     });
 
-    // Filtrar por ID si se pasa en la ruta
     const treeId = this.route.snapshot.paramMap.get('id');
     if (treeId) {
       const idNum = Number(treeId);
@@ -46,14 +48,17 @@ export class TreeDetailPage {
     this.updateCoursesProgress();
   }
 
-  // Navegar al detalle de curso
   goToCourse(course: KnowledgeCourse) {
     if (course.curso) {
       this.router.navigate(['/course-detail', course.curso.id]);
     }
   }
 
-  // Marcar curso como aprendido
+  // 🔹 Redirige al examen específico del árbol seleccionado
+  goToExam(tree: KnowledgeTree) {
+    this.router.navigate(['/exam-tree', tree.id]);
+  }
+
   markCourseAsLearned(course: KnowledgeCourse) {
     const username = sessionStorage.getItem('username') || 'anon';
     const key = `curso_${username}_${course.curso?.id}`;
@@ -63,7 +68,6 @@ export class TreeDetailPage {
     this.updateCoursesProgress();
   }
 
-  // Actualiza el progreso de todos los cursos
   updateCoursesProgress() {
     const username = sessionStorage.getItem('username') || 'anon';
     this.knowledgeTrees.forEach(tree => {

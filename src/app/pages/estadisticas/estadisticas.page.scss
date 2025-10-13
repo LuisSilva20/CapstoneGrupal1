@@ -1,3 +1,13 @@
+.correcta {
+  color: green;
+  font-weight: bold;
+}
+
+.incorrecta {
+  color: red;
+  font-weight: bold;
+}
+
 .arbol-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -25,15 +35,5 @@
 
 .arbol-stats .aciertos {
   color: green;
-  font-weight: bold;
-}
-
-.correcta {
-  color: green;
-  font-weight: bold;
-}
-
-.incorrecta {
-  color: red;
   font-weight: bold;
 }

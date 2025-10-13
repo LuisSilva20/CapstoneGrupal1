@@ -8,10 +8,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <h3 class="ion-text-center" style="font-weight: bold; color: white;">
-    Bienvenido! {{ nombre }}
-  </h3>
-
+  <h3 class="ion-text-center">Bienvenido, {{ nombre }} 👋</h3>
   <ion-card>
     <ion-card-header>
       <ion-card-title>Preparación Licencia B</ion-card-title>
@@ -19,6 +16,30 @@
     </ion-card-header>
     <ion-card-content>
       Selecciona un curso en el menú para comenzar a estudiar.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="fuentes-main-card">
+    <ion-card-header>
+      <ion-card-title>Fuentes Oficiales y Referencias</ion-card-title>
+      <ion-card-subtitle>Material de respaldo y consulta</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="fuentes-container">
+        <ion-card *ngFor="let fuente of fuentes" class="fuente-card">
+          <ion-card-header>
+            <ion-card-title>{{ fuente.titulo }}</ion-card-title>
+            <ion-card-subtitle>{{ fuente.subtitulo }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p>{{ fuente.descripcion }}</p>
+            <ion-button expand="block" (click)="abrirFuente(fuente.link)">
+              {{ fuente.botonTexto }}
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

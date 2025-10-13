@@ -2,19 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
+import {
+  IonContent, IonHeader, IonToolbar, IonTitle, IonButton, IonCard, IonCardHeader, IonCardTitle, IonCardContent,
   IonList, IonItem, IonLabel, IonProgressBar, IonRadioGroup, IonRadio, IonButtons, IonMenuButton, IonSpinner
 } from '@ionic/angular/standalone';
 
-interface Pregunta {
-  id: number;
-  texto: string;
-  opciones: string[];
-  correcta: number;
-  explicacion: string;
-  treeId?: string;
-}
-
+import { Pregunta } from 'src/app/interfaces/interfaces';
 import preguntasJson from '../../data/preguntas-examen.json';
 
 @Component({
@@ -43,6 +36,8 @@ export class ExamenPage implements OnInit {
   tiempoRestante: number = 900; // 15 minutos
   progresoTiempo: number = 1;
 
+  mensajeRetroalimentacion: string = '';
+
   constructor(private router: Router, private menuCtrl: MenuController) {}
 
   ngOnInit() {
@@ -54,7 +49,7 @@ export class ExamenPage implements OnInit {
   }
 
   cargarPreguntas() {
-    const arboles = Array.from(new Set(preguntasJson.map(p => p.treeId))).filter(a => a); // Todos los árboles
+    const arboles = Array.from(new Set(preguntasJson.map(p => p.treeId))).filter(a => a);
     const preguntasPorArbol: Pregunta[] = [];
 
     arboles.forEach(arbol => {
@@ -137,19 +132,25 @@ export class ExamenPage implements OnInit {
     this.mostrarFelicitacion = this.puntaje >= 75;
     this.terminado = true;
 
+    this.mensajeRetroalimentacion = this.getMensajePorcentaje(this.puntaje);
+
     const username = sessionStorage.getItem('username') || 'anon';
     const intentosStr = localStorage.getItem(`intentos_${username}`);
     const intentos = intentosStr ? JSON.parse(intentosStr) : [];
+
     intentos.unshift({
       fecha: new Date().toISOString(),
       respuestas: this.preguntas.map(p => ({
         id: p.id,
+        treeId: p.treeId,
         texto: p.texto,
-        seleccion: this.respuestasUsuario[p.id],
+        opciones: [...p.opciones],   
         correcta: p.correcta,
-        treeId: p.treeId
+        seleccion: this.respuestasUsuario[p.id] ?? -1,
+        explicacion: p.explicacion
       }))
     });
+
     localStorage.setItem(`intentos_${username}`, JSON.stringify(intentos));
   }
 
@@ -164,9 +165,17 @@ export class ExamenPage implements OnInit {
     this.cargarPreguntas();
     this.tiempoRestante = 900;
     this.progresoTiempo = 1;
+    this.mensajeRetroalimentacion = '';
   }
 
   irPerfil() {
     this.router.navigateByUrl('/estadisticas');
+  }
+
+  getMensajePorcentaje(puntaje: number): string {
+    if (puntaje <= 25) return 'Siguiendo intentándolo';
+    if (puntaje <= 50) return 'Vas bien';
+    if (puntaje <= 74) return 'Vas mejorando';
+    return '¡Felicidades!';
   }
 }

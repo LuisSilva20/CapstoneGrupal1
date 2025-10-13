@@ -14,9 +14,10 @@ export interface Usuario {
   id: number;
   username: string;
   role: string;
-  email?: string;
   isactive: boolean;
+  progreso?: number; 
 }
+
 
 export interface CursoGuardado {
   id: number;
@@ -148,3 +149,35 @@ export interface KnowledgeTree {
   courses: KnowledgeCourse[];
   icon?: string;
 }
+
+export interface Componente {
+  name: string;
+  icon: string;
+}
+
+export interface Fuente {
+  titulo: string;
+  subtitulo: string;
+  descripcion: string;
+  link: string;
+  botonTexto: string;
+}
+
+export interface PreguntaExamenLocal { 
+  texto: string;
+  opciones: string[];
+  correcta: number;
+  explicacion: string;
+  treeId?: string;
+}
+
+export interface RespuestaPerfil {
+  preguntaId: number;      
+  treeId: string;           
+  texto: string;
+  opciones: string[];
+  correcta: number;
+  seleccion: number;
+  explicacion?: string;       
+}
+

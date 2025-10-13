@@ -1,15 +1,11 @@
-/* SCSS para página de registro con scroll en móviles */
-
-/* Quita el fondo por defecto de ion-content */
 ion-content {
   --background: none;
 }
 
-/* Contenedor principal */
 .center-container {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* centra verticalmente si hay espacio */
+  justify-content: center;
   align-items: center;
   min-height: 100%;
   width: 100%;
@@ -18,7 +14,6 @@ ion-content {
   background: linear-gradient(135deg, #ff512f, #dd2476);
 }
 
-/* Contenedor interno que permite scroll si es necesario */
 .scroll-wrapper {
   width: 100%;
   max-width: 350px;
@@ -28,7 +23,6 @@ ion-content {
   overflow-y: auto;
 }
 
-/* Logo */
 .imgholder {
   display: flex;
   justify-content: center;
@@ -47,7 +41,6 @@ ion-content {
   object-fit: cover;
 }
 
-/* Tarjeta del formulario */
 ion-card {
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
@@ -56,14 +49,12 @@ ion-card {
   padding: 12px;
 }
 
-/* Encabezado de tarjeta */
 ion-card-header {
   color: white;
   text-align: center;
   margin-bottom: 12px;
 }
 
-/* Inputs del formulario */
 ion-item {
   --background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
@@ -74,7 +65,6 @@ ion-label {
   color: white;
 }
 
-/* Botones */
 ion-button {
   font-weight: bold;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -86,7 +76,6 @@ ion-button:hover {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Mensajes de error */
 div[style*="color: red"] {
   font-size: 0.85rem;
   margin: 2px 0 6px 0;

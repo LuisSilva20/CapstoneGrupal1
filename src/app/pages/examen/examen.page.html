@@ -9,7 +9,6 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <!-- Reglas antes del examen -->
   <ion-card *ngIf="mostrarReglas">
     <ion-card-header>
       <ion-card-title>Reglas para responder el examen</ion-card-title>
@@ -26,10 +25,8 @@
     </ion-card-content>
   </ion-card>
 
-  <!-- Spinner mientras carga -->
   <ion-spinner *ngIf="cargando" name="crescent" class="ion-margin"></ion-spinner>
 
-  <!-- Examen en progreso -->
   <ng-container *ngIf="!mostrarReglas && !terminado && preguntas.length > 0 && !cargando">
     <div class="timer-container">
       <p>⏱ Tiempo restante: {{ getTiempo() }}</p>
@@ -64,15 +61,17 @@
     </ion-card>
   </ng-container>
 
-  <!-- Resultado final -->
   <ng-container *ngIf="terminado && !cargando">
     <ion-card>
       <ion-card-header>
         <ion-card-title>Resultado Final: {{ puntaje | number:'1.0-0' }}%</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <div *ngIf="mostrarFelicitacion" class="felicitacion">
+        <div class="felicitacion" *ngIf="mostrarFelicitacion">
           🎉 ¡Felicitaciones! Has aprobado con éxito el examen. 🎉
+        </div>
+        <div class="retroalimentacion" *ngIf="!mostrarFelicitacion">
+          {{ mensajeRetroalimentacion }}
         </div>
 
         <ion-list>

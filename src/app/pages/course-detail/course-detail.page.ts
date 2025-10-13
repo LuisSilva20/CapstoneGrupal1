@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule, NgIf, NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { Curso } from '../../interfaces/interfaces';
@@ -12,8 +12,6 @@ import { cursosData } from '../../data/cursos-data';
   styleUrls: ['./course-detail.page.scss'],
   imports: [
     CommonModule,
-    NgIf,    
-    NgFor,   
     IonicModule
   ]
 })

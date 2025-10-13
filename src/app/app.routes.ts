@@ -45,4 +45,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/estadisticas/estadisticas.page').then(m => m.EstadisticasPage),
     canActivate: [IniciadoGuard]
   },
+  {
+    path: 'exam-tree/:id',
+    loadComponent: () => import('./pages/exam-tree/exam-tree.page').then( m => m.ExamTreePage),
+    canActivate: [IniciadoGuard]
+  },
+
 ];

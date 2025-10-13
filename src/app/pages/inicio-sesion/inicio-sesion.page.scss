@@ -13,7 +13,6 @@
   padding: 20px;
 }
 
-/* Tarjeta del logo */
 .imgholder {
   display: flex;
   justify-content: center;
@@ -33,7 +32,6 @@
   object-fit: cover;
 }
 
-/* Tarjeta del formulario */
 .login-card {
   width: 100%;
   max-width: 380px;
@@ -66,8 +64,6 @@ ion-button {
   font-weight: bold;
   --border-radius: 20px;
 }
-
-/* Ajuste para pantallas pequeñas */
 @media (max-height: 650px) {
   .center-container {
     padding-top: 60px;

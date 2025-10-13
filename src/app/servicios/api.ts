@@ -16,14 +16,9 @@ export class Api {
     return this.http.get<User[]>(`${environment.apiUrl}/usuarios`);
   }
 
-  /**
-   * Crea un nuevo usuario con ID incremental.
-   * Verifica también que no exista otro con el mismo username.
-   */
   CrearUsuario(newUsuario: User): Observable<User> {
     return this.listarUsuarios().pipe(
       switchMap((usuarios: User[]) => {
-        // Verificar si ya existe un username igual
         const existe = usuarios.some(
           (u) => u.username.toLowerCase() === newUsuario.username.toLowerCase()
         );
@@ -31,7 +26,6 @@ export class Api {
           return throwError(() => new Error('El nombre de usuario ya existe'));
         }
 
-        // Calcular ID incremental
         const maxId =
           usuarios.length > 0
             ? Math.max(
@@ -48,7 +42,6 @@ export class Api {
           isactive: true,
         };
 
-        // Enviar al servidor con ID correcto
         return this.http.post<User>(`${environment.apiUrl}/usuarios`, usuarioFinal);
       })
     );
@@ -58,9 +51,6 @@ export class Api {
     return this.http.get<User[]>(`${environment.apiUrl}/usuarios`);
   }
 
-  /**
-   * Busca un usuario por su nombre de usuario (username)
-   */
   GetUserById(username: string): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiUrl}/usuarios?username=${username}`);
   }

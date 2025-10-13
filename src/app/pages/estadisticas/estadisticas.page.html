@@ -13,7 +13,6 @@
     {{ filtroAReforzar ? 'Mostrar Todos' : 'Mostrar Solo Áreas a Reforzar' }}
   </ion-button>
 
-  <!-- Cuadrícula 3x3 -->
   <div class="arbol-grid">
     <ng-container *ngFor="let fila of filasArboles">
       <ng-container *ngFor="let arbol of fila">
@@ -28,7 +27,6 @@
     </ng-container>
   </div>
 
-  <!-- Tarjetas de detalle -->
   <ion-card *ngFor="let arbol of arboles" [hidden]="filtroAReforzar && arbol.porcentajeAciertos >= 80" color="light">
     <ion-card-header>
       <ion-card-title>{{ arbol.nombre }}</ion-card-title>
@@ -52,14 +50,22 @@
               </ion-button>
             </ion-item>
 
-            <ion-card *ngIf="preguntasInspeccionadas[pregunta.id]" class="ion-margin-start ion-margin-end" color="light">
-              <ion-card-content>
-                <p><strong>Pregunta:</strong> {{ pregunta.question }}</p>
-                <p><strong>Tu respuesta:</strong> {{ pregunta.options[pregunta.userSeleccion ?? -1] || 'No respondida' }}</p>
-                <p><strong>Respuesta correcta:</strong> {{ pregunta.options[pregunta.correctAnswer] }}</p>
-                <p><em>{{ pregunta.explicacion }}</em></p>
-              </ion-card-content>
-            </ion-card>
+              <ion-card *ngIf="preguntasInspeccionadas[pregunta.id]" class="ion-margin-start ion-margin-end" color="light">
+                <ion-card-content>
+                  <p>
+                    <strong>Tu respuesta:</strong> 
+                    <span class="incorrecta" *ngIf="pregunta.userSeleccion !== pregunta.correctAnswer">
+                      {{ pregunta.options[pregunta.userSeleccion ?? -1] || 'No respondida' }}
+                    </span>
+                    <span *ngIf="pregunta.userSeleccion === pregunta.correctAnswer">
+                      {{ pregunta.options[pregunta.userSeleccion] || 'No respondida' }}
+                    </span>
+                  </p>
+                  <p><strong>Respuesta correcta:</strong> <span class="correcta">{{ pregunta.options[pregunta.correctAnswer] }}</span></p>
+                  <p><em>{{ pregunta.explicacion }}</em></p>
+                </ion-card-content>
+              </ion-card>
+
 
           </ng-container>
         </ion-list>

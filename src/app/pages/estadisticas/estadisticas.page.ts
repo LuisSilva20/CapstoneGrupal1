@@ -59,59 +59,60 @@ export class EstadisticasPage implements OnInit {
     this.preguntasInspeccionadas[pregId] = !this.preguntasInspeccionadas[pregId];
   }
 
-  cargarEstadisticas() {
-    const username = sessionStorage.getItem('username') || 'anon';
-    const intentosStr = localStorage.getItem(`intentos_${username}`);
-    const intentos = intentosStr ? JSON.parse(intentosStr) : [];
+cargarEstadisticas() {
+  const username = sessionStorage.getItem('username') || 'anon';
+  const intentosStr = localStorage.getItem(`intentos_${username}`);
+  const intentos = intentosStr ? JSON.parse(intentosStr) : [];
 
-    if (!intentos || intentos.length === 0) return;
+  if (!intentos || intentos.length === 0) return;
 
-    const ultimo = intentos[0]; 
+  const ultimo = intentos[0]; 
 
-    const arbolMap: { [key: string]: ArbolEstadistica } = {};
+  const arbolMap: { [key: string]: ArbolEstadistica } = {};
 
-    this.todosLosArboles.forEach(nombre => {
-      arbolMap[nombre] = {
-        nombre,
-        preguntasIncorrectas: [],
-        totalPreguntas: 0,
-        totalAciertos: 0,
-        totalErrores: 0,
-        porcentajeAciertos: 0
-      };
-    });
+  this.todosLosArboles.forEach(nombre => {
+    arbolMap[nombre] = {
+      nombre,
+      preguntasIncorrectas: [],
+      totalPreguntas: 0,
+      totalAciertos: 0,
+      totalErrores: 0,
+      porcentajeAciertos: 0
+    };
+  });
 
-    ultimo.respuestas.forEach((r: any) => {
-      const treeName = r.treeId?.trim() || 'Sin Categoría';
-      const arbol = arbolMap[treeName];
-      if (!arbol) return;
+  ultimo.respuestas.forEach((r: any) => {
+    const treeName = r.treeId?.trim() || 'Sin Categoría';
+    const arbol = arbolMap[treeName];
+    if (!arbol) return;
 
-      arbol.totalPreguntas++;
+    arbol.totalPreguntas++;
 
-      if (r.seleccion === r.correcta) {
-        arbol.totalAciertos++;
-      } else {
-        arbol.totalErrores++;
-        arbol.preguntasIncorrectas.push({
-          id: r.id,
-          treeId: r.treeId,
-          question: r.texto,
-          options: r.opciones,
-          correctAnswer: r.correcta,
-          explicacion: r.explicacion,
-          userSeleccion: r.seleccion
-        });
-      }
-    });
+    if (r.seleccion === r.correcta) {
+      arbol.totalAciertos++;
+    } else {
+      arbol.totalErrores++;
+      arbol.preguntasIncorrectas.push({
+        id: r.id,
+        treeId: r.treeId,
+        question: r.texto,
+        options: r.opciones,
+        correctAnswer: r.correcta,
+        explicacion: r.explicacion,
+        userSeleccion: r.seleccion
+      });
+    }
+  });
 
-    Object.values(arbolMap).forEach(arbol => {
-      arbol.porcentajeAciertos = arbol.totalPreguntas > 0
-        ? (arbol.totalAciertos / arbol.totalPreguntas) * 100
-        : 100;
-    });
+  Object.values(arbolMap).forEach(arbol => {
+    arbol.porcentajeAciertos = arbol.totalPreguntas > 0
+      ? (arbol.totalAciertos / arbol.totalPreguntas) * 100
+      : 100;
+  });
 
-    this.arboles = this.todosLosArboles.map(nombre => arbolMap[nombre]);
-  }
+  this.arboles = this.todosLosArboles.map(nombre => arbolMap[nombre]);
+}
+
 
   get filasArboles() {
     const filas = [];
